@@ -2,6 +2,7 @@ package com.arthur.entities;
 
 import com.arthur.graficos.Spritesheet;
 import com.arthur.main.Game;
+import com.arthur.main.Sound;
 import com.arthur.world.Camera;
 import com.arthur.world.World;
 
@@ -65,19 +66,11 @@ public class Enemy extends Entitie{
         }
         else {
             if (Game.rand.nextInt(100) < 8) {
+                Sound.hurtEffect.play();
                 Game.player.life -= Game.rand.nextInt(3);
                 Game.player.isDamaged = true;
 
-                if (Game.player.life <= 0) {
 
-                    Game.entities = new ArrayList<Entitie>();
-                    Game.enemies = new ArrayList<Enemy>();
-                    Game.spritesheet = new Spritesheet("/spritesheet.png");
-                    Game.player = new Player(0, 0, 16, 16, Game.spritesheet.getSprite(32, 0, 16, 16));
-                    Game.entities.add(Game.player);
-                    Game.world = new World("/map.png");
-                    return;
-                }
             }
         }
 
@@ -93,6 +86,7 @@ public class Enemy extends Entitie{
             CollidingBullet();
             if(life<=0) {
                 SelfDestroy();
+                Sound.enemydeath.play();
                 return;
             }
             if(isDamaged) {
