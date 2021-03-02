@@ -1,12 +1,15 @@
 package com.arthur.entities;
 
+import com.arthur.graficos.Spritesheet;
 import com.arthur.main.Game;
+import com.arthur.main.Sound;
 import com.arthur.world.Camera;
 import com.arthur.world.WallTile;
 import com.arthur.world.World;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 public class Player extends Entitie{
 
@@ -24,7 +27,7 @@ public class Player extends Entitie{
     private int frames = 0, max_frames = 11, index = 0, max_index = 3;
     private boolean moved = false;
     public boolean right, left, up, down;
-    public double speed = 1.3;
+    public double speed = 1.2;
     public static int right_dir = 0, left_dir = 1, up_dir = 2, down_dir = 3;
     public static int dir = right_dir;
     public static int maskx = 3, masky = 0, maskwidht = 9, maskheight = 16;
@@ -81,8 +84,10 @@ public class Player extends Entitie{
             if(frames == max_frames){
                 frames = 0;
                 index++;
+
                 if(index > max_index){
                     index = 0;
+                    Sound.move.loop();
 
                 }
             }
@@ -90,10 +95,13 @@ public class Player extends Entitie{
         CollisionLifePack();
         CollisionBullet();
         CollisionGun();
+        CollisionBoot();
+        CollisionBigAmmo();
 
         if(shoot){
             shoot = false;
             if(hasGun && bullet>0) {
+                Sound.shoot.play();
                 bullet--;
                 int directionX = 0;
                 int directionY = 0;
@@ -129,6 +137,11 @@ public class Player extends Entitie{
                 isDamaged = false;
             }
         }
+        if (life <= 0){
+            life = 0;
+            Game.gameState = "Game over";
+            Sound.gameover.play();
+        }
 
         Camera.x = Camera.clamp(this.getX() - (Game.WIDTH/2), 0, World.WIDTH*16 - Game.WIDTH);
         Camera.y = Camera.clamp(this.getY() - (Game.HEIGHT/2), 0, World.HEIGHT*16 - Game.HEIGHT);
@@ -138,6 +151,7 @@ public class Player extends Entitie{
             Entitie atual = Game.entities.get(i);
             if (atual instanceof Weapon) {
                 if (Entitie.isColliding(this, atual)) {
+                    Sound.reload.play();
                     hasGun = true;
                     bullet+=4;
                     Game.entities.remove(atual);
@@ -150,6 +164,7 @@ public class Player extends Entitie{
             Entitie atual = Game.entities.get(i);
             if (atual instanceof Bullet) {
                 if (Entitie.isColliding(this, atual)) {
+                    Sound.reload.play();
                     bullet+=4;
                     Game.entities.remove(atual);
                 }
@@ -161,6 +176,7 @@ public class Player extends Entitie{
             Entitie atual = Game.entities.get(i);
             if(atual instanceof Life){
                 if(Entitie.isColliding(this, atual)){
+                    Sound.life.play();
                     life+=10;
                     if(life >= 100){
                         life = 100;
@@ -168,6 +184,29 @@ public class Player extends Entitie{
                     Game.entities.remove(atual);
                 }
 
+            }
+        }
+    }
+    public void CollisionBoot(){
+        for(int i = 0; i <Game.entities.size(); i++){
+            Entitie atual = Game.entities.get(i);
+            if(atual instanceof Boot){
+                if(Entitie.isColliding(this, atual)){
+                    speed += 0.9;
+                    Game.entities.remove(atual);
+                }
+            }
+        }
+    }
+    public void CollisionBigAmmo() {
+        for (int i = 0; i < Game.entities.size(); i++) {
+            Entitie atual = Game.entities.get(i);
+            if (atual instanceof BigAmmo) {
+                if (Entitie.isColliding(this, atual)) {
+                    Sound.reload.play();
+                    bullet+=32;
+                    Game.entities.remove(atual);
+                }
             }
         }
     }
@@ -197,18 +236,20 @@ public class Player extends Entitie{
 
 
         }
-        else if(isDamaged){
-            g.drawImage(damagedPlayer, this.getX() - Camera.x, this.getY() - Camera.y, null);
-            if(hasGun) {
+        else if(isDamaged) {
+            if (hasGun) {
+                g.drawImage(damagedPlayer, this.getX() - Camera.x, this.getY() - Camera.y, null);
                 if (dir == right_dir) {
                     g.drawImage(WEAPONRIGHTDAMAGED, getX() + 8 - Camera.x, getY() + 4 - Camera.y, 3 * Game.SCALE, 3 * Game.SCALE, null);
+                } else if (dir == left_dir) {
+                    g.drawImage(WEAPONLEFTDAMAGED, getX() - 2 - Camera.x, getY() + 4 - Camera.y, 3 * Game.SCALE, 3 * Game.SCALE, null);
+                } else if (dir == up_dir) {
+                    g.drawImage(WEAPONUPDAMAGED, getX() + 8 - Camera.x, getY() + 5 - Camera.y, 3 * Game.SCALE, 3 * Game.SCALE, null);
+                } else if (dir == down_dir) {
+                    g.drawImage(WEAPONDOWNDAMAGED, getX() + 8 - Camera.x, getY() + 7 - Camera.y, 3 * Game.SCALE, 3 * Game.SCALE, null);
                 }
-            } if(dir == left_dir){
-                g.drawImage(WEAPONLEFTDAMAGED, getX()-2 - Camera.x, getY()+4 - Camera.y,3*Game.SCALE, 3*Game.SCALE, null);
-            } if (dir == up_dir){
-                g.drawImage(WEAPONUPDAMAGED, getX()+8 - Camera.x, getY()+5 - Camera.y,3*Game.SCALE, 3*Game.SCALE, null);
-            } if(dir == down_dir){
-                g.drawImage(WEAPONDOWNDAMAGED, getX()+8 - Camera.x, getY()+7 - Camera.y, 3*Game.SCALE, 3*Game.SCALE, null);
+            } else {
+                g.drawImage(damagedPlayer, this.getX() - Camera.x, this.getY() - Camera.y, null);
             }
         }
             /*Visualizador de colisao
