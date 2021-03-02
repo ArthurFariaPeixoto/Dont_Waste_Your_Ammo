@@ -1,12 +1,14 @@
 package com.arthur.world;
 
 import com.arthur.entities.*;
+import com.arthur.graficos.Spritesheet;
 import com.arthur.main.Game;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class World {
 
@@ -63,6 +65,18 @@ public class World {
                         Game.entities.add(en1);
                         Game.enemies.add(en1);
                     }
+                    else if (pixelAtual == 0xFF51D0FF){
+                        //bota
+                        Boot boot = new Boot(xx * 16, yy * 16, 16, 16, Entitie.BOOT_EN);
+                        Game.entities.add(boot);
+                    }
+                    else if (pixelAtual == 0xFF606060){
+                        //bota
+                        BigAmmo ba = new BigAmmo(xx * 16, yy * 16, 16, 16, Entitie.BigAmmo);
+                        Game.entities.add(ba);
+
+
+                    }
                 }
             }
         }
@@ -87,6 +101,16 @@ public class World {
                 (tiles[x2 + (y2 * World.WIDTH)]instanceof WallTile) ||
                 (tiles[x3 + (y3 * World.WIDTH)]instanceof WallTile) ||
                 (tiles[x4 + (y4 * World.WIDTH)]instanceof WallTile));
+    }
+    public static void Restart(String level){
+
+        Game.entities = new ArrayList<Entitie>();
+        Game.enemies = new ArrayList<Enemy>();
+        Game.spritesheet = new Spritesheet("/spritesheet.png");
+        Game.player = new Player(0, 0, 16, 16, Game.spritesheet.getSprite(32, 0, 16, 16));
+        Game.entities.add(Game.player);
+        Game.world = new World("/" +level);
+        return;
     }
     public void render(Graphics g){
 
