@@ -1,10 +1,11 @@
-# Don't waste your ammo
+# Don't Waste Your Ammo
 
-Don't waste your ammo é o meu primeiro projeto de jogo e consiste em um jogo 2d de tiro, onde em cada mapa existem uma horda de zumbis e alguns itens para te ajudar a eliminar todos eles.
+"Don't Waste Your Ammo" é o meu primeiro projeto de jogo e consiste em um jogo 2d de tiro, onde em cada mapa existem uma horda de zumbis e alguns itens para te ajudar a eliminar todos eles.
 
 Cada mapa tem uma quantidade limitada de munição que te permite desperdiçar apenas alguns tiros antes de ficar sem munição e morrer.
 
 O jogo ainda está em desenvolvimento.
+
 
 ## Menu
 
