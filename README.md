@@ -20,3 +20,8 @@ O jogo ainda está em desenvolvimento.
 ![image](https://user-images.githubusercontent.com/62031286/137403603-385d1360-3cd4-492e-a54c-65b7a4a8b89d.png)
 
 ![image](https://user-images.githubusercontent.com/62031286/137403789-45512b27-41c6-4345-a423-49b580c45511.png)
+
+## Features futuras
+
+-> Pet que ataque inimigos e lhe conceda um bônus de vida.
+-> Mapas novos.
