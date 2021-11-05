@@ -24,4 +24,11 @@ O jogo ainda está em desenvolvimento.
 ## Features futuras
 
 -> Pet que ataque inimigos e lhe conceda um bônus de vida.
+
 -> Mapas novos.
+
+-> Monstros novos.
+
+-> Mini-boss.
+
+-> Boss final.
