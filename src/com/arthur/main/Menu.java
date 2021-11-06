@@ -1,6 +1,7 @@
 package com.arthur.main;
 
 import java.awt.*;
+import java.util.Objects;
 
 public class Menu {
     public String[] options = {"New Game", "Load Game", "Quit"};
@@ -70,17 +71,17 @@ public class Menu {
         g.drawString("Load Game", (Game.WIDTH)/2+20, (Game.HEIGHT*Game.SCALE)/2+10);
         g.drawString("Quit", (Game.WIDTH)/2+20, (Game.HEIGHT*Game.SCALE)/2+60);
 
-        if(options[CurrentOptions] == "New Game") {
+        if(Objects.equals(options[CurrentOptions], "New Game")) {
             if (minitick) {
                 g.drawString(">", (Game.WIDTH) / 2, (Game.HEIGHT * Game.SCALE) / 2 - 40);
             }
         }
-        else if(options[CurrentOptions] == "Load Game") {
+        else if(Objects.equals(options[CurrentOptions], "Load Game")) {
             if (minitick) {
                 g.drawString(">", (Game.WIDTH) / 2, (Game.HEIGHT * Game.SCALE) / 2 + 10);
             }
         }
-        else if(options[CurrentOptions] == "Quit") {
+        else if(Objects.equals(options[CurrentOptions], "Quit")) {
             if (minitick) {
                 g.drawString(">", (Game.WIDTH) / 2, (Game.HEIGHT * Game.SCALE) / 2 + 60);
             }
