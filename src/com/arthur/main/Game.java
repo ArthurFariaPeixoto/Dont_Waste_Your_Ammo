@@ -67,7 +67,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
         bullet = spritesheet.getSprite(96, 16, 16, 16);
 
         /*Iniciando mundo*/
-        world = new World("/level1.png");
+        world = new World("/level4.png");
         /* *** */
 
         menu = new Menu();
@@ -258,9 +258,6 @@ public class Game extends Canvas implements Runnable, KeyListener {
                 menu.down = true;
             }
         }
-        if(e.getKeyCode() == KeyEvent.VK_SPACE){
-            player.shoot = true;
-        }
         if(e.getKeyCode() == KeyEvent.VK_ENTER){
             restart = true;
             if(Objects.equals(gameState, "menu")){
@@ -276,6 +273,9 @@ public class Game extends Canvas implements Runnable, KeyListener {
 
     @Override
     public void keyReleased(KeyEvent e) {
+        if(e.getKeyCode() == KeyEvent.VK_SPACE){
+            player.shoot = true;
+        }
         if(e.getKeyCode() == KeyEvent.VK_D || e.getKeyCode() == KeyEvent.VK_RIGHT){
             player.right = false;
             Sound.move.stop();
