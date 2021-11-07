@@ -27,6 +27,8 @@ O jogo ainda está em desenvolvimento.
 
 -> Mapas novos.
 
+-> Mini Games.
+
 -> Monstros novos.
 
 -> Mini-boss.
