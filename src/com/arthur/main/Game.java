@@ -43,6 +43,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
     public static boolean gameover = true;
     public static int framesgameover = 0;
     private boolean restart = false;
+    public static boolean saveGame = false;
 
     public Menu menu;
 
@@ -67,7 +68,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
         bullet = spritesheet.getSprite(96, 16, 16, 16);
 
         /*Iniciando mundo*/
-        world = new World("/level4.png");
+        world = new World("/level1.png");
         /* *** */
 
         menu = new Menu();
@@ -106,6 +107,15 @@ public class Game extends Canvas implements Runnable, KeyListener {
 
     public void tick() {
         if(Objects.equals(gameState, "normal")) {
+            if(this.saveGame == true){
+                //Salva o jogo
+
+                String[] opt ={"level"};
+                int[] opt2 ={Cur_level};
+
+                Menu.saveGame(opt, opt2, 10);
+                this.saveGame = false;
+            }
             restart=false;
             for (int i = 0; i < entities.size(); i++) {
                 Entitie e = entities.get(i);
@@ -177,6 +187,11 @@ public class Game extends Canvas implements Runnable, KeyListener {
         g.setColor(Color.black);
         g.setFont(new Font("arial", Font.BOLD, 16));
         g.drawString("x "+player.bullet, 730, 33);
+
+        if(this.saveGame == true && Objects.equals(Game.gameState, "normal")) {
+            g.drawString("Saving...", (Game.WIDTH) / 4 - 50, (Game.HEIGHT * Game.SCALE) - 480);
+        }
+
         if(Objects.equals(gameState, "Game over")){
             Graphics2D g2 = (Graphics2D) g;
             g2.setColor(new Color(0,0,0,170));

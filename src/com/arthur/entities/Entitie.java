@@ -30,6 +30,7 @@ public class Entitie{
     public static BufferedImage WEAPONDOWNDAMAGED = Game.spritesheet.getSprite(128, 64, 16, 16);
     public static BufferedImage BOOT_EN = Game.spritesheet.getSprite(96, 32, 16, 16);
     public static BufferedImage BigAmmo = Game.spritesheet.getSprite(96, 48, 16, 16);
+    public static BufferedImage SaveCard = Game.spritesheet.getSprite(112, 48, 16, 16);
 
 
     public Entitie(int x, int y, int width, int height, BufferedImage sprite){

@@ -1,6 +1,7 @@
 package com.arthur.entities;
 
 import com.arthur.main.Game;
+import com.arthur.main.Menu;
 import com.arthur.main.Sound;
 import com.arthur.world.Camera;
 import com.arthur.world.World;
@@ -95,6 +96,7 @@ public class Player extends Entitie{
         CollisionGun();
         CollisionBoot();
         CollisionBigAmmo();
+        CollisionSaveCard();
 
         if(shoot){
             shoot = false;
@@ -204,6 +206,17 @@ public class Player extends Entitie{
                     Sound.reload.play();
                     bullet+=32;
                     Game.entities.remove(atual);
+                }
+            }
+        }
+    }
+    public void CollisionSaveCard(){
+        for(int i = 0; i <Game.entities.size(); i++){
+            Entitie atual = Game.entities.get(i);
+            if(atual instanceof SaveCard){
+                if(Entitie.isColliding(this, atual)){
+                    Game.entities.remove(atual);
+                    Game.saveGame = true;
                 }
             }
         }

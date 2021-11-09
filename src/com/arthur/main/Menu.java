@@ -1,6 +1,9 @@
 package com.arthur.main;
 
+import com.arthur.world.World;
+
 import java.awt.*;
+import java.io.*;
 import java.util.Objects;
 
 public class Menu {
@@ -10,9 +13,19 @@ public class Menu {
     private boolean minitick = true;
     private int tempminitick = 0;
     public static boolean pause = false;
-
     public boolean up, down, enter;
+    public static boolean saveExists = false;
+    public static boolean saveGame = false;
+
     public void tick(){
+        File file = new File("save.txt");
+        if(file.exists()){
+            saveExists = true;
+        }
+        else{
+            saveExists = false;
+        }
+
         if(up){
             Sound.menumove.play();
             up = false;
@@ -35,6 +48,15 @@ public class Menu {
             if(options[CurrentOptions] == "New Game" || options[CurrentOptions] == "Continue"){
                 Game.gameState = "normal";
                 pause = false;
+                file = new File("save.txt");
+                file.delete();
+            }
+            else if(options[CurrentOptions] == "Load Game"){
+                file = new File("save.txt");
+                if(file.exists()){
+                    String saver = loadGame(10);
+                    applySave(saver);
+                }
             }
             else if(options[CurrentOptions] == "Quit"){
                 System.exit(1);
@@ -87,5 +109,84 @@ public class Menu {
             }
         }
 
+    }
+    public static void saveGame(String[] val, int[] val1, int cripto){
+        BufferedWriter writer = null;
+
+        try {
+            writer = new BufferedWriter(new FileWriter("save.txt"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        for(int i=0; i<val.length; i++){
+            String atual = val[i];
+            atual+="#";
+            char[] valor = Integer.toString(val1[i]).toCharArray();
+
+            for(int j=0; j<valor.length; j++){
+                valor[j]+=cripto;
+                atual+=valor[j];
+            }
+            try {
+                writer.write(atual);
+                if(i<val.length-1){
+                    writer.newLine();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        try {
+            writer.flush();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+    public static String loadGame(int cripto){
+        String line = "";
+        File file = new File("save.txt");
+
+        if(file.exists()){
+            try {
+                String linhaUnica = null;
+                BufferedReader reader = new BufferedReader(new FileReader("save.txt"));
+                try {
+                    while((linhaUnica = reader.readLine()) != null){
+                        String[] campo = linhaUnica.split("#");
+                        char[] valor = campo[1].toCharArray();
+                        campo[1] = "";
+                        for(int i=0;i<valor.length;i++){
+                            valor[i]-=cripto;
+                            campo[1]+=valor[i];
+                        }
+                        line+=campo[0];
+                        line+="#";
+                        line+=campo[1];
+                        line+="/";
+                    }
+                }catch (IOException e){
+                    e.printStackTrace();
+                }
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+        return line;
+    }
+    public static void applySave(String string){
+        String[] campos = string.split("/");
+        for(int i=0; i<campos.length; i++){
+            String[] campos2 = campos[i].split("#");
+            switch (campos2[0]){
+                case "level":
+                    World.Restart("level"+campos2[1]+".png");
+                    Game.gameState = "normal";
+                    pause = false;
+                    break;
+            }
+        }
     }
 }

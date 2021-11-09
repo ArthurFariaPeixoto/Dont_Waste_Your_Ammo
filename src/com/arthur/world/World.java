@@ -74,8 +74,12 @@ public class World {
                         //bota
                         BigAmmo ba = new BigAmmo(xx * 16, yy * 16, 16, 16, Entitie.BigAmmo);
                         Game.entities.add(ba);
-
-
+                    }
+                    else if(pixelAtual == 0xFF727272){
+                        //Save
+                        SaveCard sc = new SaveCard(xx * 16, yy * 16, 16, 16, Entitie.SaveCard);
+                        Game.entities.add(sc);
+                        sc.setMask(3, 3, 12, 12);
                     }
                 }
             }
