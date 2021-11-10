@@ -7,7 +7,6 @@ import com.arthur.world.World;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 
 public class Enemy extends Entitie{
 
