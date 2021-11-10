@@ -30,7 +30,7 @@ public class Player extends Entitie{
     public static int right_dir = 0, left_dir = 1, up_dir = 2, down_dir = 3;
     public static int dir = right_dir;
     public static int maskx = 3, masky = 0, maskwidht = 9, maskheight = 16;
-    public double life = 100, max_life = 100;
+    public double life = 10000, max_life = 10000;
     public int bullet = 0;
     public boolean isDamaged = false;
     private int damagedFrames = 0;

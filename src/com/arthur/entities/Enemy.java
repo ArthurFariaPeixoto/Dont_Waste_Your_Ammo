@@ -18,6 +18,7 @@ public class Enemy extends Entitie{
     public int life = 10;
     private boolean isDamaged = false;
     private int damagedFrames = 0;
+    private boolean seePlayer = false;
 
     public Enemy(int x, int y, int width, int height, BufferedImage sprite) {
         super(x, y, width, height, null);
@@ -29,48 +30,39 @@ public class Enemy extends Entitie{
     }
     public void tick(){
 
-        if (!this.isCollidingWithPlayer()) {
-            ///* COLISAO ENTRE INIMIGOS (BUG DE COLISÃO AO MORRER)
-            if (Game.rand.nextInt(100) < 60) {
-                if (x < Game.player.getX() && World.isFree((int) (x + speed), this.getY())
-                        && !isColliding((int) (x + speed), this.getY())) {
-                    x += speed;
-                } else if (x > Game.player.getX() && World.isFree((int) (x - speed), this.getY())
-                        && !isColliding((int) (x - speed), this.getY())) {
-                    x -= speed;
-                }
-                if (y < Game.player.getY() && World.isFree(this.getX(), (int) (y + speed))
-                        && !isColliding(this.getX(), (int) (y + speed))) {
-                    y += speed;
-                } else if (y > Game.player.getY() && World.isFree(this.getX(), (int) (y - speed))
-                        && !isColliding(this.getX(), (int) (y - speed))) {
-                    y -= speed;
-                }
-            }
-                /**/
-           /* MOVIMENTAÇÃO ALEATORIA DOS INIMIGOS (SEM COLISÃO ENTRE ELES)
-             if(Game.rand.nextInt(100) < 60) {
-                if (x < Game.player.getX() && World.isFree((int) (x + speed), this.getY())){
-                    x += speed;
-                } else if (x > Game.player.getX() && World.isFree((int) (x - speed), this.getY())){
-                    x -= speed;
-                }
-                if (y < Game.player.getY() && World.isFree(this.getX(), (int) (y + speed))){
-                    y += speed;
-                } else if (y > Game.player.getY() && World.isFree(this.getX(), (int) (y - speed))){
-                    y -= speed;
+        if(this.calculateDistance(this.getX(), this.getY(), Game.player.getX(), Game.player.getY()) < 145) {
+            this.seePlayer = true;
+            if(seePlayer == true){
+                if (!this.isCollidingWithPlayer()) {
+                    if (Game.rand.nextInt(100) < 60) {
+                        if (x < Game.player.getX() && World.isFree((int) (x + speed), this.getY())
+                                && !isColliding((int) (x + speed), this.getY())) {
+                            x += speed;
+                        } else if (x > Game.player.getX() && World.isFree((int) (x - speed), this.getY())
+                                && !isColliding((int) (x - speed), this.getY())) {
+                            x -= speed;
+                        }
+                        if (y < Game.player.getY() && World.isFree(this.getX(), (int) (y + speed))
+                                && !isColliding(this.getX(), (int) (y + speed))) {
+                            y += speed;
+                        } else if (y > Game.player.getY() && World.isFree(this.getX(), (int) (y - speed))
+                                && !isColliding(this.getX(), (int) (y - speed))) {
+                            y -= speed;
+                        }
+                    }
+                }else{
+                    if (Game.rand.nextInt(100) < 8) {
+                        Sound.hurtEffect.play();
+                        Game.player.life -= Game.rand.nextInt(3);
+                        Game.player.isDamaged = true;
+
+
+                    }
                 }
             }
-            /**/
         }
-        else {
-            if (Game.rand.nextInt(100) < 8) {
-                Sound.hurtEffect.play();
-                Game.player.life -= Game.rand.nextInt(3);
-                Game.player.isDamaged = true;
-
-
-            }
+        else{
+            seePlayer = false;
         }
 
             frames++;

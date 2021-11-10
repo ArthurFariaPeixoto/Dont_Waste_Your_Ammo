@@ -3,6 +3,7 @@ package com.arthur.main;
 import com.arthur.entities.*;
 import com.arthur.graficos.Spritesheet;
 import com.arthur.graficos.UI;
+import com.arthur.world.Light;
 import com.arthur.world.World;
 
 import javax.swing.*;
@@ -11,6 +12,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
+import java.awt.image.DataBuffer;
+import java.awt.image.DataBufferInt;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -38,6 +41,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
     public static World world;
     public static Random rand;
     public static UI ui;
+    public static Light light;
 
     public static String gameState = "menu";
     public static boolean gameover = true;
@@ -46,6 +50,9 @@ public class Game extends Canvas implements Runnable, KeyListener {
     public static boolean saveGame = false;
 
     public Menu menu;
+
+    public static int[] pixels;
+
 
 
     public Game(){
@@ -57,6 +64,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
         /*Iniciando objetos*/
         ui = new UI();
         image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
+        pixels = ((DataBufferInt)image.getRaster().getDataBuffer()).getData();
 
         entities = new ArrayList<Entitie>();
         enemies = new ArrayList<Enemy>();
@@ -69,6 +77,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 
         /*Iniciando mundo*/
         world = new World("/level1.png");
+        light = new Light();
         /* *** */
 
         menu = new Menu();

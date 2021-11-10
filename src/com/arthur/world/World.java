@@ -29,12 +29,32 @@ public class World {
                     int pixelAtual = pixels[xx +(yy*map.getWidth())];
                     tiles[xx + (yy * WIDTH)] = new FloorTile(xx * 16, yy * 16, Tile.TILE_FLOOR);
                     if(pixelAtual == 0xFF000000){
-                        //chão
+                        //chão de grama
                         tiles[xx + (yy * WIDTH)] = new FloorTile(xx * 16, yy * 16, Tile.TILE_FLOOR);
                     }
+                    else if(pixelAtual == 0xFFFFB23F){
+                        //chão de areia
+                        tiles[xx + (yy * WIDTH)] = new FloorTile(xx * 16, yy * 16, Tile.SAND_FLOOR);
+                    }
+                    else if(pixelAtual == 0xFFFFBC5E){
+                        //chão de areia com agua
+                        tiles[xx + (yy * WIDTH)] = new FloorTile(xx * 16, yy * 16, Tile.WATERSAND_FLOOR);
+                    }
+                    else if(pixelAtual == 0xFFFFC677){
+                        //chão de areia com agua 2 estagio
+                        tiles[xx + (yy * WIDTH)] = new FloorTile(xx * 16, yy * 16, Tile.WATERSAND_FLOOR2);
+                    }
                     else if(pixelAtual == 0xFFFFFFFF){
-                        //parede
+                        //parede de pedra laranja kkkk
                         tiles[xx + (yy * WIDTH)] = new WallTile(xx * 16, yy * 16, Tile.TILE_WALL);
+                    }
+                    else if(pixelAtual == 0xFFFFFF00){
+                        //parede de pedra
+                        tiles[xx + (yy * WIDTH)] = new WallTile(xx * 16, yy * 16, Tile.STONE_WALL);
+                    }
+                    else if(pixelAtual == 0xFF0021FF){
+                        //agua
+                        tiles[xx + (yy * WIDTH)] = new WallTile(xx * 16, yy * 16, Tile.WATER_WALL);
                     }
                     else if(pixelAtual == 0xFF0026FF){
                         //player
