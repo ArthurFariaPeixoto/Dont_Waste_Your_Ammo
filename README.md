@@ -23,9 +23,11 @@ O jogo ainda está em desenvolvimento.
 
 ## Features futuras
 
--> Pet que ataque inimigos e lhe conceda um bônus de vida.
-
 -> Mapas novos.
+
+-> Novas texturas.
+
+-> Pet que ataque inimigos e lhe conceda um bônus de vida.
 
 -> Mini Games.
 
