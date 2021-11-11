@@ -25,6 +25,8 @@ O jogo ainda está em desenvolvimento.
 
 -> Mapas novos.
 
+-> Novas texturas.
+
 -> Pet que ataque inimigos e lhe conceda um bônus de vida.
 
 -> Mini Games.
