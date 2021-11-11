@@ -7,6 +7,7 @@ import com.arthur.world.Node;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.Comparator;
 import java.util.List;
 
 public class Entitie{
@@ -18,6 +19,7 @@ public class Entitie{
     public BufferedImage sprite;
     private int maskx, masky, maskwidht, maskheight;
     protected List<Node> path;
+    public int depth;
 
     public static BufferedImage LIFE_EN = Game.spritesheet.getSprite(96,0, 16, 16);
     public static BufferedImage WEAPON_EN = Game.spritesheet.getSprite(112,0, 16, 16);
@@ -135,5 +137,19 @@ public class Entitie{
          /**/
 
     }
+
+    public static Comparator<Entitie> verifyDepth = new Comparator<Entitie>() {
+
+        @Override
+        public int compare(Entitie o1, Entitie o2) {
+            if(o2.depth < o1.depth){
+                return + 1;
+            }
+            if(o2.depth > o1.depth){
+                return - 1;
+            }
+            return 0;
+        }
+    };
 
 }

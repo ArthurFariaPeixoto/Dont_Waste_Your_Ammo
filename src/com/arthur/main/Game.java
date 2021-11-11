@@ -13,10 +13,8 @@ import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
-import java.util.Objects;
-import java.util.Random;
 
 public class Game extends Canvas implements Runnable, KeyListener {
 
@@ -179,6 +177,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
         /* *** */
 
         /*renderização dos objetos*/
+        Collections.sort(entities, Entitie.verifyDepth);
         for (int i = 0; i < entities.size(); i++) {
             Entitie e = entities.get(i);
             e.render(g);

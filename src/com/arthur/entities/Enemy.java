@@ -31,6 +31,7 @@ public class Enemy extends Entitie{
         setMask(maskx, masky, maskwidht, maskheight);
     }
     public void tick(){
+        depth=0;
         if(this.calculateDistance(this.getX(), this.getY(), Game.player.getX(), Game.player.getY()) < 145) {
             this.seePlayer = true;
             if (seePlayer == true) {
@@ -51,7 +52,7 @@ public class Enemy extends Entitie{
                                 path = AStar.findPath(Game.world, start, finish);
                             }
                         }
-                        if (Game.rand.nextInt(100) < 7) {
+                        if (Game.rand.nextInt(100) < 10) {
                             KeepPosition start = new KeepPosition((int) x / 16, (int) y / 16);
                             KeepPosition finish = new KeepPosition((int) Game.player.x / 16, (int) Game.player.y / 16);
                             path = AStar.findPath(Game.world, start, finish);
@@ -59,8 +60,9 @@ public class Enemy extends Entitie{
 
                     }
                 } else {
-                    if (Game.rand.nextInt(100) < 15) {
+                    if (Game.rand.nextInt(100) < 10) {
                         Game.player.life -= Game.rand.nextInt(3);
+                        Sound.hurtEffect.play();
                         Game.player.isDamaged = true;
 
                     }
@@ -69,7 +71,7 @@ public class Enemy extends Entitie{
         }else{
             seePlayer = false;
         }
-        if(Game.rand.nextInt(100)<60){
+        if(Game.rand.nextInt(100)<70){
             followPath(path);
         }
         frames++;

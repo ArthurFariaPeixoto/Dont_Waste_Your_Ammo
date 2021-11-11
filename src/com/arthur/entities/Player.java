@@ -58,6 +58,7 @@ public class Player extends Entitie{
         setMask(maskx, masky, maskwidht, maskheight);
     }
     public void tick(){
+        depth=1;
         moved = false;
         if(right && World.isFree((int)(x+speed), this.getY())){
             moved = true;
@@ -131,7 +132,6 @@ public class Player extends Entitie{
             }
         }
         if(isDamaged){
-            Sound.hurtEffect.play();
             damagedFrames++;
 
             if(damagedFrames == 10){
