@@ -151,6 +151,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
                 }
             }
         }else if (Objects.equals(gameState, "menu")){
+            player.updateCamera();
             menu.tick();
         }
         if (restart && Objects.equals(gameState, "Game over")){
@@ -160,7 +161,6 @@ public class Game extends Canvas implements Runnable, KeyListener {
             Cur_level = 1;
         String newWorld = "level" + Cur_level + ".png";
         World.Restart(newWorld);
-
         }
     }
 
@@ -187,6 +187,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
             bullets.get(i).render(g);
         }
         /* *** */
+
         ui.render(g);
         g = bs.getDrawGraphics();
         g.drawImage(image, 0, 0, WIDTH * SCALE, HEIGHT * SCALE, null);

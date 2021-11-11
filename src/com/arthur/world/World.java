@@ -127,9 +127,12 @@ public class World {
                 (tiles[x4 + (y4 * World.WIDTH)]instanceof WallTile));
     }
     public static void Restart(String level){
-
+        Game.entities.clear();
+        Game.enemies.clear();
+        Game.bullets.clear();
         Game.entities = new ArrayList<Entitie>();
         Game.enemies = new ArrayList<Enemy>();
+        Game.bullets = new ArrayList<BulletShoot>();
         Game.spritesheet = new Spritesheet("/spritesheet.png");
         Game.player = new Player(0, 0, 16, 16, Game.spritesheet.getSprite(32, 0, 16, 16));
         Game.entities.add(Game.player);

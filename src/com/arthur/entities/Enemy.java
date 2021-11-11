@@ -2,7 +2,9 @@ package com.arthur.entities;
 
 import com.arthur.main.Game;
 import com.arthur.main.Sound;
+import com.arthur.world.AStar;
 import com.arthur.world.Camera;
+import com.arthur.world.KeepPosition;
 import com.arthur.world.World;
 
 import java.awt.*;
@@ -12,9 +14,9 @@ public class Enemy extends Entitie{
 
     private int frames = 0, max_frames = 9, index = 0, max_index = 3;
     private double speed = 1;
-    private int maskx = 3, masky = 0, maskwidht = 10, maskheight = 17;
+    private int maskx = 4, masky = 0, maskwidht =10, maskheight = 17;
     private BufferedImage[] sprites;
-    public int life = 10;
+    public int life = 12;
     private boolean isDamaged = false;
     private int damagedFrames = 0;
     private boolean seePlayer = false;
@@ -26,66 +28,71 @@ public class Enemy extends Entitie{
         sprites[1] = Game.spritesheet.getSprite(112+16, 16, 16, 16);
         sprites[2] = Game.spritesheet.getSprite(112+32, 16, 16, 16);
         sprites[3] = Game.spritesheet.getSprite(112, 32, 16, 16);
+        setMask(maskx, masky, maskwidht, maskheight);
     }
     public void tick(){
-
         if(this.calculateDistance(this.getX(), this.getY(), Game.player.getX(), Game.player.getY()) < 145) {
             this.seePlayer = true;
-            if(seePlayer == true){
-                if (!this.isCollidingWithPlayer()) {
+            if (seePlayer == true) {
+                if (!isCollidingWithPlayer()) {
                     if (Game.rand.nextInt(100) < 60) {
                         if (x < Game.player.getX() && World.isFree((int) (x + speed), this.getY())
-                                && !isColliding((int) (x + speed), this.getY())) {
-                            x += speed;
-                        } else if (x > Game.player.getX() && World.isFree((int) (x - speed), this.getY())
-                                && !isColliding((int) (x - speed), this.getY())) {
-                            x -= speed;
+                                && !entitieIsColliding((int) (x + speed), this.getY())
+                                || x > Game.player.getX() && World.isFree((int) (x - speed), this.getY())
+                                && !entitieIsColliding((int) (x - speed), this.getY())
+                                || y < Game.player.getY() && World.isFree(this.getX(), (int) (y + speed))
+                                && !entitieIsColliding(this.getX(), (int) (y + speed))
+                                || y > Game.player.getY() && World.isFree(this.getX(), (int) (y - speed))
+                                && !entitieIsColliding(this.getX(), (int) (y - speed))) {
+
+                            if (path == null || path.size() == 0) {
+                                KeepPosition start = new KeepPosition((int) x / 16, (int) y / 16);
+                                KeepPosition finish = new KeepPosition((int) Game.player.x / 16, (int) Game.player.y / 16);
+                                path = AStar.findPath(Game.world, start, finish);
+                            }
                         }
-                        if (y < Game.player.getY() && World.isFree(this.getX(), (int) (y + speed))
-                                && !isColliding(this.getX(), (int) (y + speed))) {
-                            y += speed;
-                        } else if (y > Game.player.getY() && World.isFree(this.getX(), (int) (y - speed))
-                                && !isColliding(this.getX(), (int) (y - speed))) {
-                            y -= speed;
+                        if (Game.rand.nextInt(100) < 7) {
+                            KeepPosition start = new KeepPosition((int) x / 16, (int) y / 16);
+                            KeepPosition finish = new KeepPosition((int) Game.player.x / 16, (int) Game.player.y / 16);
+                            path = AStar.findPath(Game.world, start, finish);
                         }
+
                     }
-                }else{
-                    if (Game.rand.nextInt(100) < 8) {
-                        Sound.hurtEffect.play();
+                } else {
+                    if (Game.rand.nextInt(100) < 15) {
                         Game.player.life -= Game.rand.nextInt(3);
                         Game.player.isDamaged = true;
 
-
                     }
                 }
             }
-        }
-        else{
+        }else{
             seePlayer = false;
         }
-
-            frames++;
-            if(frames == max_frames){
-                frames = 0;
-                index++;
-                if(index > max_index){
-                    index = 0;
-
+        if(Game.rand.nextInt(100)<60){
+            followPath(path);
+        }
+        frames++;
+        if(frames == max_frames){
+            frames = 0;
+            index++;
+            if(index > max_index){
+                index = 0;
                 }
             }
-            CollidingBullet();
-            if(life<=0) {
-                SelfDestroy();
-                Sound.enemydeath.play();
-                return;
+        CollidingBullet();
+        if(life<=0) {
+            SelfDestroy();
+            Sound.enemydeath.play();
+            return;
+        }
+        if(isDamaged) {
+            damagedFrames++;
+            if (damagedFrames == 10) {
+                damagedFrames = 0;
+                isDamaged = false;
             }
-            if(isDamaged) {
-                damagedFrames++;
-                if (damagedFrames == 10) {
-                    damagedFrames = 0;
-                    isDamaged = false;
-                }
-            }
+        }
     }
     public void SelfDestroy(){
         Game.entities.remove(this);
@@ -110,29 +117,14 @@ public class Enemy extends Entitie{
 
         return enemyCurrent.intersects(Player);
     }
-    public boolean isColliding(int xnext, int ynext){
-        Rectangle enemyCurrent = new Rectangle(xnext+maskx, ynext+masky, maskwidht, maskheight);
-        for(int i = 0; i < Game.enemies.size(); i++){
-            Enemy e = Game.enemies.get(i);
-            if(e == this){
-                continue;
-            }
-            Rectangle targetEnemy = new Rectangle(e.getX()+maskx, e.getY()+masky, maskwidht, maskheight);
-                if (enemyCurrent.intersects(targetEnemy)) {
-                    return true;
-                }
-
-        }
-        return false;
-    }
     public void render(Graphics g){
         if(!isDamaged) {
             g.drawImage(sprites[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
         }else{
             g.drawImage(Entitie.ENEMYDAMAGE, this.getX() - Camera.x, this.getY() - Camera.y, null);
         }
-    /*Visualizador de colisao
-       super.render(g);
+        /*Visualizador de colisao
+        super.render(g);
         g.fillRect(this.getX()+maskx - Camera.x, this.getY()+masky - Camera.y, maskwidht, maskheight);
     /**/
     }

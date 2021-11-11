@@ -2,9 +2,12 @@ package com.arthur.entities;
 
 import com.arthur.main.Game;
 import com.arthur.world.Camera;
+import com.arthur.world.KeepPosition;
+import com.arthur.world.Node;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.List;
 
 public class Entitie{
 
@@ -14,6 +17,7 @@ public class Entitie{
     protected int height;
     public BufferedImage sprite;
     private int maskx, masky, maskwidht, maskheight;
+    protected List<Node> path;
 
     public static BufferedImage LIFE_EN = Game.spritesheet.getSprite(96,0, 16, 16);
     public static BufferedImage WEAPON_EN = Game.spritesheet.getSprite(112,0, 16, 16);
@@ -70,15 +74,58 @@ public class Entitie{
     public int getHeight(){
         return this.height;
     }
-    public void tick(){}
+    public void tick(){
+
+    }
     public double calculateDistance(int x1, int y1, int x2, int y2){
         return Math.sqrt((x1-x2)*(x1-x2)+(y1-y2)*(y1-y2));
+    }
+    public void followPath(List<Node> path){
+        if(path != null){
+            if(path.size()>0){
+                KeepPosition target = path.get(path.size()-1).tile;
+
+                if(x<target.x*16 && !entitieIsColliding(this.getX() + 1, this.getY())){
+                    x++;
+                }
+                else if(x>target.x*16 && !entitieIsColliding(this.getX()-1, this.getY())){
+                    x--;
+                }
+
+                if(y< target.y*16 && !entitieIsColliding(this.getX(), this.getY()+1)){
+                    y++;
+                }
+                else if(y> target.y*16 && !entitieIsColliding(this.getX(), this.getY()-1)){
+                    y--;
+                }
+
+                if(x == target.x*16 && y == target.y*16){
+                    path.remove(path.size()-1);
+                }
+            }
+        }
     }
     public static boolean isColliding(Entitie e1, Entitie e2){
         Rectangle e1Mask = new Rectangle(e1.getX()+e1.maskx, e1.getY()+e1.masky, e1.maskwidht, e1.maskheight);
         Rectangle e2Mask = new Rectangle(e2.getX()+e2.maskx, e2.getY()+e2.masky, e2.maskwidht, e2.maskheight);
         return e1Mask.intersects(e2Mask);
     }
+    public boolean entitieIsColliding(int xnext, int ynext){
+        Rectangle entitieCurrent = new Rectangle(xnext+maskx, ynext+masky, maskwidht, maskheight);
+        for(int i = 0; i < Game.entities.size(); i++){
+            Entitie e = Game.entities.get(i);
+            if(e == this){
+                continue;
+            }
+            Rectangle targetEntitie = new Rectangle(e.getX()+maskx, e.getY()+masky, maskwidht, maskheight);
+            if (entitieCurrent.intersects(targetEntitie)) {
+                return true;
+            }
+
+        }
+        return false;
+    }
+
     public void render(Graphics g){
         g.drawImage(sprite, getX() - Camera.x, getY() - Camera.y, null);
         /*Visualização de colisao

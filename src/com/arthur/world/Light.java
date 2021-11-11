@@ -24,8 +24,8 @@ public class Light {
     public void render(){
         for(int xx = 0; xx< Game.WIDTH;xx++){
             for(int yy=0; yy<Game.HEIGHT; yy++){
-                if(lightPixels[(xx+(yy*Game.WIDTH))] == 0xFF000000){
-                    Game.pixels[xx+(yy*Game.WIDTH)] = 0xFFFFFFFF;
+                if(lightPixels[(xx+(yy*Game.WIDTH))] == 0xFFFFFFFF){
+                    Game.pixels[xx+(yy*Game.WIDTH)] = 0xFF000000;
                 }
             }
         }

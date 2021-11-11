@@ -29,8 +29,8 @@ public class Player extends Entitie{
     public double speed = 1.2;
     public static int right_dir = 0, left_dir = 1, up_dir = 2, down_dir = 3;
     public static int dir = right_dir;
-    public static int maskx = 3, masky = 0, maskwidht = 9, maskheight = 16;
-    public double life = 10000, max_life = 10000;
+    public static int maskx = 2, masky = 0, maskwidht = 13, maskheight = 18;
+    public double life = 100, max_life = 100;
     public int bullet = 0;
     public boolean isDamaged = false;
     private int damagedFrames = 0;
@@ -55,6 +55,7 @@ public class Player extends Entitie{
         for (int i = 0; i < 4; i++) {
             downPlayer[i] = Game.spritesheet.getSprite(32+(i*16), 48, 16, 16);
         }
+        setMask(maskx, masky, maskwidht, maskheight);
     }
     public void tick(){
         moved = false;
@@ -130,6 +131,7 @@ public class Player extends Entitie{
             }
         }
         if(isDamaged){
+            Sound.hurtEffect.play();
             damagedFrames++;
 
             if(damagedFrames == 10){
@@ -143,6 +145,9 @@ public class Player extends Entitie{
             Sound.gameover.play();
         }
 
+        updateCamera();
+    }
+    public void updateCamera(){
         Camera.x = Camera.clamp(this.getX() - (Game.WIDTH/2), 0, World.WIDTH*16 - Game.WIDTH);
         Camera.y = Camera.clamp(this.getY() - (Game.HEIGHT/2), 0, World.HEIGHT*16 - Game.HEIGHT);
     }
