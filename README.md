@@ -29,6 +29,8 @@ O jogo ainda está em desenvolvimento.
 
 -> Mapas novos.
 
+-> Minimapa.
+
 -> Novas texturas.
 
 -> Mini Games.
