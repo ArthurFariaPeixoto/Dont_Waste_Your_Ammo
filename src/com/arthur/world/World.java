@@ -2,6 +2,7 @@ package com.arthur.world;
 
 import com.arthur.entities.*;
 import com.arthur.graficos.Spritesheet;
+import com.arthur.graficos.UI;
 import com.arthur.main.Game;
 
 import javax.imageio.ImageIO;
@@ -34,15 +35,15 @@ public class World {
                     }
                     else if(pixelAtual == 0xFFFFB23F){
                         //chão de areia
-                        tiles[xx + (yy * WIDTH)] = new FloorTile(xx * 16, yy * 16, Tile.SAND_FLOOR);
+                        tiles[xx + (yy * WIDTH)] = new SandFloorTile(xx * 16, yy * 16, Tile.SAND_FLOOR);
                     }
                     else if(pixelAtual == 0xFFFFBC5E){
                         //chão de areia com agua
-                        tiles[xx + (yy * WIDTH)] = new FloorTile(xx * 16, yy * 16, Tile.WATERSAND_FLOOR);
+                        tiles[xx + (yy * WIDTH)] = new WatterFloorTile(xx * 16, yy * 16, Tile.WATERSAND_FLOOR);
                     }
                     else if(pixelAtual == 0xFFFFC677){
                         //chão de areia com agua 2 estagio
-                        tiles[xx + (yy * WIDTH)] = new FloorTile(xx * 16, yy * 16, Tile.WATERSAND_FLOOR2);
+                        tiles[xx + (yy * WIDTH)] = new WatterFloorTile(xx * 16, yy * 16, Tile.WATERSAND_FLOOR2);
                     }
                     else if(pixelAtual == 0xFFFFFFFF){
                         //parede de pedra laranja kkkk
@@ -54,7 +55,7 @@ public class World {
                     }
                     else if(pixelAtual == 0xFF0021FF){
                         //agua
-                        tiles[xx + (yy * WIDTH)] = new WallTile(xx * 16, yy * 16, Tile.WATER_WALL);
+                        tiles[xx + (yy * WIDTH)] = new WatterWallTile(xx * 16, yy * 16, Tile.WATER_WALL);
                     }
                     else if(pixelAtual == 0xFF0026FF){
                         //player
@@ -137,6 +138,7 @@ public class World {
         Game.player = new Player(0, 0, 16, 16, Game.spritesheet.getSprite(32, 0, 16, 16));
         Game.entities.add(Game.player);
         Game.world = new World("/" +level);
+        Game.ui = new UI();
         return;
     }
     public void render(Graphics g){

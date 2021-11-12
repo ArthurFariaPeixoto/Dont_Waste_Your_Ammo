@@ -59,7 +59,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
         setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
         initFrame();
         /*Iniciando objetos*/
-        ui = new UI();
+
         image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
         pixels = ((DataBufferInt)image.getRaster().getDataBuffer()).getData();
 
@@ -73,10 +73,11 @@ public class Game extends Canvas implements Runnable, KeyListener {
         bullet = spritesheet.getSprite(96, 16, 16, 16);
 
         /*Iniciando mundo*/
-        world = new World("/level1.png");
+        world = new World("/level2.png");
         light = new Light();
         /* *** */
 
+        ui = new UI();
         menu = new Menu();
 
     }
