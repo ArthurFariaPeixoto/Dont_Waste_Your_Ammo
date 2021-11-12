@@ -62,7 +62,7 @@ public class Enemy extends Entitie{
                 } else {
                     if (Game.rand.nextInt(100) < 10) {
                         Game.player.life -= Game.rand.nextInt(3);
-                        Sound.hurtEffect.play();
+                        Sound.Clips.hurtEffect.play();
                         Game.player.isDamaged = true;
 
                     }
@@ -85,7 +85,7 @@ public class Enemy extends Entitie{
         CollidingBullet();
         if(life<=0) {
             SelfDestroy();
-            Sound.enemydeath.play();
+            Sound.Clips.enemydeath.play();
             return;
         }
         if(isDamaged) {

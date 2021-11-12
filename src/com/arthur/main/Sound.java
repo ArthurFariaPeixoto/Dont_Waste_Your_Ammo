@@ -1,42 +1,83 @@
 package com.arthur.main;
 
-import java.applet.Applet;
-import java.applet.AudioClip;
+import java.io.*;
+import javax.sound.sampled.*;
 
 public class Sound {
 
-    private AudioClip clip;
+    public static class Clips{
+        public Clip[] clips;
+        private int control;
+        private int count;
 
-    public static final Sound music = new Sound("/music1.wav");
-    public static final Sound hurtEffect = new Sound("/Hit.wav");
-    public static final Sound enemydeath = new Sound("/enemydeath.wav");
-    public static final Sound menu = new Sound ("/menuyes.wav");
-    public static final Sound gameover = new Sound("/gameover.wav");
-    public static final Sound shoot = new Sound("/gunshot.wav");
-    public static final Sound reload = new Sound("/reload.wav");
-    public static final Sound life = new Sound("/life.wav");
-    public static final Sound menumove = new Sound("/menu.wav");
-    public static final Sound move = new Sound ("/move1.wav");
 
-    private Sound(String name) {
-        try {
-            clip = Applet.newAudioClip(Sound.class.getResource(name));
-        }catch(Throwable e) {}
-    }
 
-    public void play() {
-        try {
-            new Thread(() -> clip.play()).start();
-        }catch(Throwable e) {}
-    }
+        public Clips(byte[] buffer, int count) throws LineUnavailableException, IOException, UnsupportedAudioFileException{
+            if(buffer == null){
+                return;
+            }
+            clips = new Clip[count];
+            this.count = count;
 
-    public void loop() {
-        try {
-            new Thread(() -> clip.loop()).start();
-        }catch(Throwable e) {}
-    }
+            for(int i=0; i<count; i++){
+                clips[i] = AudioSystem.getClip();
+                clips[i].open(AudioSystem.getAudioInputStream(new ByteArrayInputStream(buffer)));
 
-    public void stop(){
-        clip.stop();
+            }
+        }
+        public void play(){
+            if(clips == null){
+                return;
+            }
+            clips[control].stop();
+            clips[control].setFramePosition(0);
+            clips[control].start();
+            control++;
+            if(control>=count){
+                control = 0;
+            }
+        }
+        public void loop(){
+            if(clips == null){
+                return;
+            }
+            clips[control].loop(300);
+        }
+        public static Clips music = load("/music1.wav", 1);
+        public static Clips hurtEffect = load("/Hit.wav", 1);
+        public static Clips enemydeath = load("/enemydeath.wav", 1);
+        public static Clips menu = load("/menuyes.wav", 1);
+        public static Clips gameover = load("/gameover.wav", 1);
+        public static Clips shoot = load("/gunshot.wav", 1);
+        public static Clips reload = load("/reload.wav", 1);
+        public static Clips life = load("/life.wav", 1);
+        public static Clips menumove = load("/menu.wav", 1);
+        public static Clips move = load("/move1.wav", 1);
+
+        private static Clips load(String name, int count){
+            try{
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                DataInputStream dataInputStream = new DataInputStream(Sound.class.getResourceAsStream(name));
+
+                byte[] buffer = new byte[1024];
+                int read =0;
+
+                while ((read = dataInputStream.read(buffer)) >= 0){
+                    byteArrayOutputStream.write(buffer, 0, read);
+                }
+                dataInputStream.close();
+                byte[] data = byteArrayOutputStream.toByteArray();
+
+                return new Clips(data, count);
+
+            }catch (Exception e){
+                try{
+                    return new Clips(null, 0);
+
+                }catch (Exception ee){
+                    return null;
+                }
+            }
+        }
     }
 }

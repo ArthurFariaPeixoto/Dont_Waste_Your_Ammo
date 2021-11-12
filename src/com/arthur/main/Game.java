@@ -55,10 +55,15 @@ public class Game extends Canvas implements Runnable, KeyListener {
 
 
     public Game(){
-        Sound.music.loop();
+        Sound.Clips.music.loop();
         rand = new Random();
         addKeyListener(this);
-        setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
+        //Janela Cheia
+        setPreferredSize(new Dimension(Toolkit.getDefaultToolkit().getScreenSize()));
+
+        //Janela pequena
+        //setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
+
         initFrame();
         /*Iniciando objetos*/
 
@@ -75,7 +80,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
         bullet = spritesheet.getSprite(96, 16, 16, 16);
 
         /*Iniciando mundo*/
-        world = new World("/level2.png");
+        world = new World("/level4.png");
         light = new Light();
         /* *** */
 
@@ -93,6 +98,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
         }
         frame = new JFrame("Don't Waste Your Ammo");
         frame.add(this);
+        frame.setUndecorated(true);
         frame.setResizable(false);
         frame.pack();
         frame.setLocationRelativeTo(null);
@@ -163,7 +169,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
             menu.tick();
         }
         if (restart && Objects.equals(gameState, "Game over")){
-            Sound.menu.play();
+            Sound.Clips.menu.play();
             restart = false;
             gameState = "normal";
             Cur_level = 1;
@@ -199,27 +205,31 @@ public class Game extends Canvas implements Runnable, KeyListener {
 
         ui.render(g);
         g = bs.getDrawGraphics();
-        g.drawImage(image, 0, 0, WIDTH * SCALE, HEIGHT * SCALE, null);
+        //tela cheia
+        g.drawImage(image, 0, 0, Toolkit.getDefaultToolkit().getScreenSize().width, Toolkit.getDefaultToolkit().getScreenSize().height, null);
 
-        g.drawImage(bullet, 700, 6, 12*SCALE, 12*SCALE, null);
+        //tela em janela
+        //g.drawImage(image, 0, 0, WIDTH*SCALE, HEIGHT*SCALE, null);
+
+        g.drawImage(bullet, Toolkit.getDefaultToolkit().getScreenSize().width-100, 6, 15*SCALE, 15*SCALE, null);
         g.setColor(Color.black);
-        g.setFont(new Font("arial", Font.BOLD, 16));
-        g.drawString("x "+player.bullet, 730, 33);
+        g.setFont(new Font("arial", Font.BOLD, 20));
+        g.drawString("x "+player.bullet, Toolkit.getDefaultToolkit().getScreenSize().width-65, 45);
 
         if(this.saveGame == true && Objects.equals(Game.gameState, "normal")) {
-            g.drawString("Saving...", (Game.WIDTH) / 4 - 50, (Game.HEIGHT * Game.SCALE) - 480);
+            g.drawString("Saving...", Toolkit.getDefaultToolkit().getScreenSize().width / 8, Toolkit.getDefaultToolkit().getScreenSize().height -70);
         }
 
         if(Objects.equals(gameState, "Game over")){
             Graphics2D g2 = (Graphics2D) g;
             g2.setColor(new Color(0,0,0,170));
-            g2.fillRect(0, 0, WIDTH*SCALE, HEIGHT*SCALE);
+            g2.fillRect(0, 0, Toolkit.getDefaultToolkit().getScreenSize().width, Toolkit.getDefaultToolkit().getScreenSize().height);
             g.setColor(Color.WHITE);
             g.setFont(new Font("arial", Font.BOLD, 40));
-            g.drawString("Game Over!", (WIDTH*SCALE)/2 - 100, (HEIGHT*SCALE)/2);
+            g.drawString("Game Over!", Toolkit.getDefaultToolkit().getScreenSize().width/2 - 100, Toolkit.getDefaultToolkit().getScreenSize().height/2);
             if(gameover) {
                 g.setFont(new Font("arial", Font.BOLD, 15));
-                g.drawString("Press ENTER to restart.", (WIDTH * SCALE) / 2 - 70, (HEIGHT * SCALE) / 2 + 35);
+                g.drawString("Press ENTER to restart.", Toolkit.getDefaultToolkit().getScreenSize().width / 2 - 70, Toolkit.getDefaultToolkit().getScreenSize().height / 2 + 35);
             }
         }else if(Objects.equals(gameState, "menu")){
             menu.render(g);
@@ -264,20 +274,20 @@ public class Game extends Canvas implements Runnable, KeyListener {
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_D || e.getKeyCode() == KeyEvent.VK_RIGHT) {
             if(Objects.equals(gameState, "normal")){
-            player.right = true;
-            Sound.move.loop();
+                player.right = true;
+                //Sound.Clips.move.play();
             }
         } else if (e.getKeyCode() == KeyEvent.VK_A || e.getKeyCode() == KeyEvent.VK_LEFT) {
             if(Objects.equals(gameState, "normal")) {
                 player.left = true;
-                Sound.move.loop();
+                //Sound.Clips.move.play();
             }
 
         }
         if (e.getKeyCode() == KeyEvent.VK_W || e.getKeyCode() == KeyEvent.VK_UP) {
             if(Objects.equals(gameState, "normal")) {
                 player.up = true;
-                Sound.move.loop();
+                //Sound.Clips.move.play();
             }
             if(Objects.equals(gameState, "menu")){
                 menu.up = true;
@@ -285,7 +295,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
         } else if (e.getKeyCode() == KeyEvent.VK_S || e.getKeyCode() == KeyEvent.VK_DOWN) {
             if(Objects.equals(gameState, "normal")){
                 player.down = true;
-                Sound.move.loop();
+                //Sound.Clips.move.play();
             }
             if(Objects.equals(gameState, "menu")){
                 menu.down = true;
@@ -311,19 +321,19 @@ public class Game extends Canvas implements Runnable, KeyListener {
         }
         if(e.getKeyCode() == KeyEvent.VK_D || e.getKeyCode() == KeyEvent.VK_RIGHT){
             player.right = false;
-            Sound.move.stop();
+
         }
         else if(e.getKeyCode() == KeyEvent.VK_A || e.getKeyCode() == KeyEvent.VK_LEFT){
             player.left = false;
-            Sound.move.stop();
+
         }
         if(e.getKeyCode() == KeyEvent.VK_W || e.getKeyCode() == KeyEvent.VK_UP){
             player.up = false;
-            Sound.move.stop();
+
         }
         else if(e.getKeyCode() == KeyEvent.VK_S || e.getKeyCode() == KeyEvent.VK_DOWN){
             player.down = false;
-            Sound.move.stop();
+
         }
     }
 }

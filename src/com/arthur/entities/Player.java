@@ -88,8 +88,7 @@ public class Player extends Entitie{
 
                 if(index > max_index){
                     index = 0;
-                    Sound.move.loop();
-
+                    Sound.Clips.move.play();
                 }
             }
         }
@@ -103,7 +102,7 @@ public class Player extends Entitie{
         if(shoot){
             shoot = false;
             if(hasGun && bullet>0) {
-                Sound.shoot.play();
+                Sound.Clips.shoot.play();
                 bullet--;
                 int directionX = 0;
                 int directionY = 0;
@@ -142,7 +141,7 @@ public class Player extends Entitie{
         if (life <= 0){
             life = 0;
             Game.gameState = "Game over";
-            Sound.gameover.play();
+            Sound.Clips.gameover.play();
         }
 
         updateCamera();
@@ -156,7 +155,7 @@ public class Player extends Entitie{
             Entitie atual = Game.entities.get(i);
             if (atual instanceof Weapon) {
                 if (Entitie.isColliding(this, atual)) {
-                    Sound.reload.play();
+                    Sound.Clips.reload.play();
                     hasGun = true;
                     bullet+=4;
                     Game.entities.remove(atual);
@@ -169,7 +168,7 @@ public class Player extends Entitie{
             Entitie atual = Game.entities.get(i);
             if (atual instanceof Bullet) {
                 if (Entitie.isColliding(this, atual)) {
-                    Sound.reload.play();
+                    Sound.Clips.reload.play();
                     bullet+=4;
                     Game.entities.remove(atual);
                 }
@@ -181,7 +180,7 @@ public class Player extends Entitie{
             Entitie atual = Game.entities.get(i);
             if(atual instanceof Life){
                 if(Entitie.isColliding(this, atual)){
-                    Sound.life.play();
+                    Sound.Clips.life.play();
                     life+=10;
                     if(life >= 100){
                         life = 100;
@@ -208,7 +207,7 @@ public class Player extends Entitie{
             Entitie atual = Game.entities.get(i);
             if (atual instanceof BigAmmo) {
                 if (Entitie.isColliding(this, atual)) {
-                    Sound.reload.play();
+                    Sound.Clips.reload.play();
                     bullet+=32;
                     Game.entities.remove(atual);
                 }
@@ -220,8 +219,8 @@ public class Player extends Entitie{
             Entitie atual = Game.entities.get(i);
             if(atual instanceof SaveCard){
                 if(Entitie.isColliding(this, atual)){
-                    Game.entities.remove(atual);
                     Game.saveGame = true;
+                    Game.entities.remove(atual);
                 }
             }
         }

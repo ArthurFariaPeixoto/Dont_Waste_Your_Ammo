@@ -27,7 +27,7 @@ public class Menu {
         }
 
         if(up){
-            Sound.menumove.play();
+            Sound.Clips.menumove.play();
             up = false;
             CurrentOptions--;
             if(CurrentOptions < 0){
@@ -35,7 +35,7 @@ public class Menu {
             }
         }
         if(down){
-            Sound.menumove.play();
+            Sound.Clips.menumove.play();
             down = false;
             CurrentOptions++;
             if(CurrentOptions > MaxOptions){
@@ -44,7 +44,7 @@ public class Menu {
         }
         if(enter){
             enter = false;
-            Sound.menu.play();
+            Sound.Clips.menu.play();
             if(options[CurrentOptions] == "New Game" || options[CurrentOptions] == "Continue"){
                 Game.gameState = "normal";
                 pause = false;
@@ -76,36 +76,36 @@ public class Menu {
     public void render(Graphics g){
         Graphics2D g2 = (Graphics2D) g;
         g2.setColor(new Color(0,0,0, 180));
-        g2.fillRect(0, 0, Game.WIDTH*Game.SCALE, Game.HEIGHT*Game.SCALE);
+        g2.fillRect(0, 0, Toolkit.getDefaultToolkit().getScreenSize().width, Toolkit.getDefaultToolkit().getScreenSize().height);
         g.setColor(Color.white);
         g.setFont(new Font("arial", Font.BOLD, 36));
-        g.drawString("Don't Waste Your Ammo", (Game.WIDTH)/2+50, (Game.HEIGHT*Game.SCALE)/2 - 200);
+        g.drawString("Don't Waste Your Ammo", Toolkit.getDefaultToolkit().getScreenSize().width/3, Toolkit.getDefaultToolkit().getScreenSize().height/2 - 200);
 
         //Opções do menu
         g.setColor(Color.white);
         g.setFont(new Font("arial", Font.BOLD, 24));
         if(pause == false) {
-            g.drawString("New Game", (Game.WIDTH) / 2 + 20, (Game.HEIGHT * Game.SCALE) / 2 - 40);
+            g.drawString("New Game", Toolkit.getDefaultToolkit().getScreenSize().width / 3 + 20, Toolkit.getDefaultToolkit().getScreenSize().height / 2 - 40);
         }
         else{
-            g.drawString("Continue", (Game.WIDTH) / 2 + 20, (Game.HEIGHT * Game.SCALE) / 2 - 40);
+            g.drawString("Continue", Toolkit.getDefaultToolkit().getScreenSize().width / 3 + 20, Toolkit.getDefaultToolkit().getScreenSize().height / 2 - 40);
         }
-        g.drawString("Load Game", (Game.WIDTH)/2+20, (Game.HEIGHT*Game.SCALE)/2+10);
-        g.drawString("Quit", (Game.WIDTH)/2+20, (Game.HEIGHT*Game.SCALE)/2+60);
+        g.drawString("Load Game", Toolkit.getDefaultToolkit().getScreenSize().width/3+20, Toolkit.getDefaultToolkit().getScreenSize().height/2+10);
+        g.drawString("Quit", Toolkit.getDefaultToolkit().getScreenSize().width/3+20, Toolkit.getDefaultToolkit().getScreenSize().height/2+60);
 
         if(Objects.equals(options[CurrentOptions], "New Game")) {
             if (minitick) {
-                g.drawString(">", (Game.WIDTH) / 2, (Game.HEIGHT * Game.SCALE) / 2 - 40);
+                g.drawString(">", Toolkit.getDefaultToolkit().getScreenSize().width / 3, Toolkit.getDefaultToolkit().getScreenSize().height / 2 - 40);
             }
         }
         else if(Objects.equals(options[CurrentOptions], "Load Game")) {
             if (minitick) {
-                g.drawString(">", (Game.WIDTH) / 2, (Game.HEIGHT * Game.SCALE) / 2 + 10);
+                g.drawString(">", Toolkit.getDefaultToolkit().getScreenSize().width / 3, Toolkit.getDefaultToolkit().getScreenSize().height / 2 + 10);
             }
         }
         else if(Objects.equals(options[CurrentOptions], "Quit")) {
             if (minitick) {
-                g.drawString(">", (Game.WIDTH) / 2, (Game.HEIGHT * Game.SCALE) / 2 + 60);
+                g.drawString(">", Toolkit.getDefaultToolkit().getScreenSize().width / 3, Toolkit.getDefaultToolkit().getScreenSize().height / 2 + 60);
             }
         }
 
