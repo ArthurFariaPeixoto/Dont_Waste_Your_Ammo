@@ -125,7 +125,11 @@ public class World {
         return !((tiles[x1 + (y1 * World.WIDTH)]instanceof WallTile) ||
                 (tiles[x2 + (y2 * World.WIDTH)]instanceof WallTile) ||
                 (tiles[x3 + (y3 * World.WIDTH)]instanceof WallTile) ||
-                (tiles[x4 + (y4 * World.WIDTH)]instanceof WallTile));
+                (tiles[x4 + (y4 * World.WIDTH)]instanceof WallTile)||
+                (tiles[x1 + (y1 * World.WIDTH)]instanceof WatterWallTile) ||
+                (tiles[x2 + (y2 * World.WIDTH)]instanceof WatterWallTile) ||
+                (tiles[x3 + (y3 * World.WIDTH)]instanceof WatterWallTile) ||
+                (tiles[x4 + (y4 * World.WIDTH)]instanceof WatterWallTile));
     }
     public static void Restart(String level){
         Game.entities.clear();
