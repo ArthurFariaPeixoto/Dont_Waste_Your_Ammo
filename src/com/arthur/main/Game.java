@@ -6,6 +6,7 @@ import com.arthur.graficos.UI;
 import com.arthur.world.Light;
 import com.arthur.world.World;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -13,6 +14,7 @@ import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
+import java.io.IOException;
 import java.util.*;
 import java.util.List;
 
@@ -83,13 +85,20 @@ public class Game extends Canvas implements Runnable, KeyListener {
     }
 
     public void initFrame() {
-        frame = new JFrame();
+        Image icone = null;
+        try {
+            icone = ImageIO.read(getClass().getResource("/icon.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        frame = new JFrame("Don't Waste Your Bullets");
         frame.add(this);
         frame.setResizable(false);
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
+        frame.setIconImage(icone);
     }
 
     public synchronized void start() {
