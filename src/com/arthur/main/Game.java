@@ -91,7 +91,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        frame = new JFrame("Don't Waste Your Bullets");
+        frame = new JFrame("Don't Waste Your Ammo");
         frame.add(this);
         frame.setResizable(false);
         frame.pack();
