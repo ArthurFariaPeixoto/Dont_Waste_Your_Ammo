@@ -27,6 +27,9 @@ public class Game extends Canvas implements Runnable, KeyListener {
     public static final int HEIGHT = 180;
     public static final int SCALE = 3;
 
+    public static final int WIDTHFULLSCREEN = Toolkit.getDefaultToolkit().getScreenSize().width;
+    public static final int HEIGHTFULLSREEN = Toolkit.getDefaultToolkit().getScreenSize().height;
+
     private int Cur_level = 1, max_level = 4;
     private final BufferedImage image;
     private final BufferedImage bullet;
@@ -51,8 +54,6 @@ public class Game extends Canvas implements Runnable, KeyListener {
     public Menu menu;
 
     public static int[] pixels;
-
-
 
     public Game(){
         Sound.Clips.music.loop();
@@ -205,30 +206,30 @@ public class Game extends Canvas implements Runnable, KeyListener {
         ui.render(g);
         g = bs.getDrawGraphics();
         //tela cheia
-        g.drawImage(image, 0, 0, Toolkit.getDefaultToolkit().getScreenSize().width, Toolkit.getDefaultToolkit().getScreenSize().height, null);
+        g.drawImage(image, 0, 0, WIDTHFULLSCREEN, HEIGHTFULLSREEN, null);
 
         //tela em janela
         //g.drawImage(image, 0, 0, WIDTH*SCALE, HEIGHT*SCALE, null);
 
-        g.drawImage(bullet, Toolkit.getDefaultToolkit().getScreenSize().width-100, 6, 15*SCALE, 15*SCALE, null);
+        g.drawImage(bullet, WIDTHFULLSCREEN-100, 6, 15*SCALE, 15*SCALE, null);
         g.setColor(Color.black);
         g.setFont(new Font("arial", Font.BOLD, 20));
-        g.drawString("x "+player.bullet, Toolkit.getDefaultToolkit().getScreenSize().width-65, 45);
+        g.drawString("x "+player.bullet, WIDTHFULLSCREEN-65, 45);
 
         if(this.saveGame == true && Objects.equals(Game.gameState, "normal")) {
-            g.drawString("Saving...", Toolkit.getDefaultToolkit().getScreenSize().width / 8, Toolkit.getDefaultToolkit().getScreenSize().height -70);
+            g.drawString("Saving...", WIDTHFULLSCREEN / 8, HEIGHTFULLSREEN -70);
         }
 
         if(Objects.equals(gameState, "Game over")){
             Graphics2D g2 = (Graphics2D) g;
             g2.setColor(new Color(0,0,0,170));
-            g2.fillRect(0, 0, Toolkit.getDefaultToolkit().getScreenSize().width, Toolkit.getDefaultToolkit().getScreenSize().height);
+            g2.fillRect(0, 0, WIDTHFULLSCREEN, HEIGHTFULLSREEN);
             g.setColor(Color.WHITE);
             g.setFont(new Font("arial", Font.BOLD, 40));
-            g.drawString("Game Over!", Toolkit.getDefaultToolkit().getScreenSize().width/2 - 100, Toolkit.getDefaultToolkit().getScreenSize().height/2);
+            g.drawString("Game Over!", WIDTHFULLSCREEN/2 - 100, HEIGHTFULLSREEN/2);
             if(gameover) {
                 g.setFont(new Font("arial", Font.BOLD, 15));
-                g.drawString("Press ENTER to restart.", Toolkit.getDefaultToolkit().getScreenSize().width / 2 - 70, Toolkit.getDefaultToolkit().getScreenSize().height / 2 + 35);
+                g.drawString("Press ENTER to restart.", WIDTHFULLSCREEN / 2 - 70, HEIGHTFULLSREEN / 2 + 35);
             }
         }else if(Objects.equals(gameState, "menu")){
             menu.render(g);

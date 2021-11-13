@@ -21,8 +21,6 @@ public class Player extends Entitie{
     private boolean hasGun = false;
     public boolean shoot = false;
 
-
-
     private int frames = 0, max_frames = 11, index = 0, max_index = 3;
     private boolean moved = false;
     public boolean right, left, up, down;
@@ -57,25 +55,26 @@ public class Player extends Entitie{
         }
         setMask(maskx, masky, maskwidht, maskheight);
     }
+
     public void tick(){
         depth=1;
         moved = false;
-        if(right && World.isFree((int)(x+speed), this.getY())){
+        if(right && World.isFree((int)(x+speed), this.getY(),16,16)){
             moved = true;
             dir = right_dir;
             x+=speed;
         }
-        else if (left && World.isFree((int)(x-speed), this.getY())){
+        else if (left && World.isFree((int)(x-speed), this.getY(),16,16)){
             moved = true;
             dir = left_dir;
             x-=speed;
         }
-        if (up && World.isFree(this.getX(), (int)(y-speed))){
+        if (up && World.isFree(this.getX(), (int)(y-speed),16,16)){
             moved = true;
             dir = up_dir;
             y-=speed;
         }
-        else if(down && World.isFree(this.getX(), (int)(y+speed))){
+        else if(down && World.isFree(this.getX(), (int)(y+speed),16,16)){
             dir = down_dir;
             moved = true;
             y+=speed;
@@ -146,10 +145,12 @@ public class Player extends Entitie{
 
         updateCamera();
     }
+
     public void updateCamera(){
         Camera.x = Camera.clamp(this.getX() - (Game.WIDTH/2), 0, World.WIDTH*16 - Game.WIDTH);
         Camera.y = Camera.clamp(this.getY() - (Game.HEIGHT/2), 0, World.HEIGHT*16 - Game.HEIGHT);
     }
+
     public void CollisionGun() {
         for (int i = 0; i < Game.entities.size(); i++) {
             Entitie atual = Game.entities.get(i);
@@ -163,6 +164,7 @@ public class Player extends Entitie{
             }
         }
     }
+
     public void CollisionBullet() {
         for (int i = 0; i < Game.entities.size(); i++) {
             Entitie atual = Game.entities.get(i);
@@ -175,6 +177,7 @@ public class Player extends Entitie{
             }
         }
     }
+
     public void CollisionLifePack(){
         for(int i = 0; i <Game.entities.size(); i++){
             Entitie atual = Game.entities.get(i);
@@ -191,6 +194,7 @@ public class Player extends Entitie{
             }
         }
     }
+
     public void CollisionBoot(){
         for(int i = 0; i <Game.entities.size(); i++){
             Entitie atual = Game.entities.get(i);
@@ -202,6 +206,7 @@ public class Player extends Entitie{
             }
         }
     }
+
     public void CollisionBigAmmo() {
         for (int i = 0; i < Game.entities.size(); i++) {
             Entitie atual = Game.entities.get(i);
@@ -214,6 +219,7 @@ public class Player extends Entitie{
             }
         }
     }
+
     public void CollisionSaveCard(){
         for(int i = 0; i <Game.entities.size(); i++){
             Entitie atual = Game.entities.get(i);
@@ -225,6 +231,7 @@ public class Player extends Entitie{
             }
         }
     }
+
     public void render(Graphics g) {
         if (!isDamaged) {
             if (dir == right_dir) {

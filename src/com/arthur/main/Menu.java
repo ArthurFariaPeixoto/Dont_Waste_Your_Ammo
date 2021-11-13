@@ -7,6 +7,7 @@ import java.io.*;
 import java.util.Objects;
 
 public class Menu {
+
     public String[] options = {"New Game", "Load Game", "Quit"};
     public int CurrentOptions = 0;
     public int MaxOptions = options.length - 1;
@@ -15,7 +16,6 @@ public class Menu {
     public static boolean pause = false;
     public boolean up, down, enter;
     public static boolean saveExists = false;
-    public static boolean saveGame = false;
 
     public void tick(){
         File file = new File("save.txt");
@@ -73,43 +73,45 @@ public class Menu {
         }
 
     }
+
     public void render(Graphics g){
         Graphics2D g2 = (Graphics2D) g;
         g2.setColor(new Color(0,0,0, 180));
-        g2.fillRect(0, 0, Toolkit.getDefaultToolkit().getScreenSize().width, Toolkit.getDefaultToolkit().getScreenSize().height);
+        g2.fillRect(0, 0, Game.WIDTHFULLSCREEN, Game.HEIGHTFULLSREEN);
         g.setColor(Color.white);
         g.setFont(new Font("arial", Font.BOLD, 36));
-        g.drawString("Don't Waste Your Ammo", Toolkit.getDefaultToolkit().getScreenSize().width/3, Toolkit.getDefaultToolkit().getScreenSize().height/2 - 200);
+        g.drawString("Don't Waste Your Ammo", Game.WIDTHFULLSCREEN/3, Game.HEIGHTFULLSREEN/2 - 200);
 
         //Opções do menu
         g.setColor(Color.white);
         g.setFont(new Font("arial", Font.BOLD, 24));
         if(pause == false) {
-            g.drawString("New Game", Toolkit.getDefaultToolkit().getScreenSize().width / 3 + 20, Toolkit.getDefaultToolkit().getScreenSize().height / 2 - 40);
+            g.drawString("New Game", Game.WIDTHFULLSCREEN / 3 + 20, Game.HEIGHTFULLSREEN / 2 - 40);
         }
         else{
-            g.drawString("Continue", Toolkit.getDefaultToolkit().getScreenSize().width / 3 + 20, Toolkit.getDefaultToolkit().getScreenSize().height / 2 - 40);
+            g.drawString("Continue", Game.WIDTHFULLSCREEN / 3 + 20, Game.HEIGHTFULLSREEN / 2 - 40);
         }
-        g.drawString("Load Game", Toolkit.getDefaultToolkit().getScreenSize().width/3+20, Toolkit.getDefaultToolkit().getScreenSize().height/2+10);
-        g.drawString("Quit", Toolkit.getDefaultToolkit().getScreenSize().width/3+20, Toolkit.getDefaultToolkit().getScreenSize().height/2+60);
+        g.drawString("Load Game", Game.WIDTHFULLSCREEN/3+20, Game.HEIGHTFULLSREEN/2+10);
+        g.drawString("Quit", Game.WIDTHFULLSCREEN/3+20, Game.HEIGHTFULLSREEN/2+60);
 
         if(Objects.equals(options[CurrentOptions], "New Game")) {
             if (minitick) {
-                g.drawString(">", Toolkit.getDefaultToolkit().getScreenSize().width / 3, Toolkit.getDefaultToolkit().getScreenSize().height / 2 - 40);
+                g.drawString(">", Game.WIDTHFULLSCREEN / 3, Game.HEIGHTFULLSREEN / 2 - 40);
             }
         }
         else if(Objects.equals(options[CurrentOptions], "Load Game")) {
             if (minitick) {
-                g.drawString(">", Toolkit.getDefaultToolkit().getScreenSize().width / 3, Toolkit.getDefaultToolkit().getScreenSize().height / 2 + 10);
+                g.drawString(">", Game.WIDTHFULLSCREEN / 3, Game.HEIGHTFULLSREEN / 2 + 10);
             }
         }
         else if(Objects.equals(options[CurrentOptions], "Quit")) {
             if (minitick) {
-                g.drawString(">", Toolkit.getDefaultToolkit().getScreenSize().width / 3, Toolkit.getDefaultToolkit().getScreenSize().height / 2 + 60);
+                g.drawString(">", Game.WIDTHFULLSCREEN / 3, Game.HEIGHTFULLSREEN / 2 + 60);
             }
         }
 
     }
+
     public static void saveGame(String[] val, int[] val1, int cripto){
         BufferedWriter writer = null;
 
@@ -145,6 +147,7 @@ public class Menu {
         }
 
     }
+
     public static String loadGame(int cripto){
         String line = "";
         File file = new File("save.txt");
@@ -176,6 +179,7 @@ public class Menu {
         }
         return line;
     }
+
     public static void applySave(String string){
         String[] campos = string.split("/");
         for(int i=0; i<campos.length; i++){

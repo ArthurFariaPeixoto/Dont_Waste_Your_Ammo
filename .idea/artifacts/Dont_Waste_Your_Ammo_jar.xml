@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Dont_Waste_Your_Ammo:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Dont_Waste_Your_Ammo_jar</output-path>
+    <root id="archive" name="Dont_Waste_Your_Ammo.jar">
+      <element id="module-output" name="Dont_Waste_Your_Ammo" />
+    </root>
+  </artifact>
+</component>

@@ -7,6 +7,7 @@ public class KeepPosition {
         this.x = x;
         this.y = y;
     }
+
     public boolean same(Object object){
         KeepPosition vector = (KeepPosition) object;
         if(vector.x == this.x && vector.y == this.y){

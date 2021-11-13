@@ -109,18 +109,19 @@ public class World {
             e.printStackTrace();
         }
     }
-    public static boolean isFree(int xnext, int ynext){
+
+    public static boolean isFree(int xnext, int ynext, int width, int height){
         int x1 = xnext / TILE_SIZE;
         int y1 = ynext / TILE_SIZE;
 
-        int x2 = (xnext+TILE_SIZE-1) / TILE_SIZE;
+        int x2 = (xnext+width-1) / TILE_SIZE;
         int y2 = ynext / TILE_SIZE;
 
         int x3 = xnext / TILE_SIZE;
-        int y3 = (ynext+TILE_SIZE-1) / TILE_SIZE;
+        int y3 = (ynext+height-1) / TILE_SIZE;
 
-        int x4 = (xnext+TILE_SIZE-1) / TILE_SIZE;
-        int y4 = (ynext+TILE_SIZE-1) / TILE_SIZE;
+        int x4 = (xnext+width-1) / TILE_SIZE;
+        int y4 = (ynext+height-1) / TILE_SIZE;
 
         return !((tiles[x1 + (y1 * World.WIDTH)]instanceof WallTile) ||
                 (tiles[x2 + (y2 * World.WIDTH)]instanceof WallTile) ||
@@ -131,6 +132,7 @@ public class World {
                 (tiles[x3 + (y3 * World.WIDTH)]instanceof WatterWallTile) ||
                 (tiles[x4 + (y4 * World.WIDTH)]instanceof WatterWallTile));
     }
+
     public static void Restart(String level){
         Game.entities.clear();
         Game.enemies.clear();
@@ -145,6 +147,7 @@ public class World {
         Game.ui = new UI();
         return;
     }
+
     public void render(Graphics g){
 
         int xstart = Camera.x >> 4;

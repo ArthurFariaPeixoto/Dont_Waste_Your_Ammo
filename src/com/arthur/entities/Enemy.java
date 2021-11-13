@@ -30,6 +30,7 @@ public class Enemy extends Entitie{
         sprites[3] = Game.spritesheet.getSprite(112, 32, 16, 16);
         setMask(maskx, masky, maskwidht, maskheight);
     }
+
     public void tick(){
         depth=0;
         if(this.calculateDistance(this.getX(), this.getY(), Game.player.getX(), Game.player.getY()) < 145) {
@@ -37,13 +38,13 @@ public class Enemy extends Entitie{
             if (seePlayer == true) {
                 if (!isCollidingWithPlayer()) {
                     if (Game.rand.nextInt(100) < 60) {
-                        if (x < Game.player.getX() && World.isFree((int) (x + speed), this.getY())
+                        if (x < Game.player.getX() && World.isFree((int) (x + speed), this.getY(),16,16)
                                 && !entitieIsColliding((int) (x + speed), this.getY())
-                                || x > Game.player.getX() && World.isFree((int) (x - speed), this.getY())
+                                || x > Game.player.getX() && World.isFree((int) (x - speed), this.getY(),16,16)
                                 && !entitieIsColliding((int) (x - speed), this.getY())
-                                || y < Game.player.getY() && World.isFree(this.getX(), (int) (y + speed))
+                                || y < Game.player.getY() && World.isFree(this.getX(), (int) (y + speed),16,16)
                                 && !entitieIsColliding(this.getX(), (int) (y + speed))
-                                || y > Game.player.getY() && World.isFree(this.getX(), (int) (y - speed))
+                                || y > Game.player.getY() && World.isFree(this.getX(), (int) (y - speed),16,16)
                                 && !entitieIsColliding(this.getX(), (int) (y - speed))) {
 
                             if (path == null || path.size() == 0) {
@@ -96,10 +97,12 @@ public class Enemy extends Entitie{
             }
         }
     }
+
     public void SelfDestroy(){
         Game.entities.remove(this);
         Game.enemies.remove(this);
     }
+
     public void CollidingBullet(){
         for(int i=0; i<Game.bullets.size(); i++){
             Entitie e = Game.bullets.get(i);
@@ -113,12 +116,14 @@ public class Enemy extends Entitie{
             }
         }
     }
+
     public boolean isCollidingWithPlayer(){
         Rectangle enemyCurrent = new Rectangle(getX()+maskx, getY()+masky, maskwidht, maskheight);
         Rectangle Player = new Rectangle(Game.player.getX() + Game.player.maskx, Game.player.getY() + Game.player.masky, Game.player.maskwidht, Game.player.maskheight);
 
         return enemyCurrent.intersects(Player);
     }
+
     public void render(Graphics g){
         if(!isDamaged) {
             g.drawImage(sprites[index], this.getX() - Camera.x, this.getY() - Camera.y, null);

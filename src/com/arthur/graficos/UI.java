@@ -32,6 +32,7 @@ public class UI {
 
 
     }
+
     private void renderMinimap(){
         for(int i =0; i<minimapPixels.length; i++){
             minimapPixels[i] = 0;

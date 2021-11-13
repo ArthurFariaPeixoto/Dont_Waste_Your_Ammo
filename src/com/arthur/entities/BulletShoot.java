@@ -2,7 +2,6 @@ package com.arthur.entities;
 
 import com.arthur.main.Game;
 import com.arthur.world.Camera;
-
 import com.arthur.world.World;
 
 import java.awt.*;
@@ -20,19 +19,22 @@ public class BulletShoot extends Entitie{
         this.directionX = directionX;
         this.directionY = directionY;
     }
+
     public void tick(){
+        if(World.isFree((int ) (x+(directionX*speed)),(int) (y+(directionY*speed)),3,3)){
         x += directionX * speed;
         y += directionY * speed;
+        }else{
+            Game.bullets.remove(this);
+            return;
+        }
         curLife++;
         if(curLife==life){
             Game.bullets.remove(this);
             return;
         }
-        if(!World.isFree((int) x,(int) y)){
-            Game.bullets.remove(this);
-            return;
-        }
     }
+
     public void render(Graphics g){
         g.setColor(Color.yellow);
         g.fillOval(this.getX() - Camera.x, this.getY() - Camera.y, width, height);

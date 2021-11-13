@@ -6,11 +6,21 @@ import javax.sound.sampled.*;
 public class Sound {
 
     public static class Clips{
+
         public Clip[] clips;
         private int control;
         private int count;
 
-
+        public static Clips music = load("/music1.wav", 1);
+        public static Clips hurtEffect = load("/Hit.wav", 1);
+        public static Clips enemydeath = load("/enemydeath.wav", 1);
+        public static Clips menu = load("/menuyes.wav", 1);
+        public static Clips gameover = load("/gameover.wav", 1);
+        public static Clips shoot = load("/gunshot.wav", 1);
+        public static Clips reload = load("/reload.wav", 1);
+        public static Clips life = load("/life.wav", 1);
+        public static Clips menumove = load("/menu.wav", 1);
+        public static Clips move = load("/move1.wav", 1);
 
         public Clips(byte[] buffer, int count) throws LineUnavailableException, IOException, UnsupportedAudioFileException{
             if(buffer == null){
@@ -25,6 +35,7 @@ public class Sound {
 
             }
         }
+
         public void play(){
             if(clips == null){
                 return;
@@ -37,22 +48,13 @@ public class Sound {
                 control = 0;
             }
         }
+
         public void loop(){
             if(clips == null){
                 return;
             }
             clips[control].loop(300);
         }
-        public static Clips music = load("/music1.wav", 1);
-        public static Clips hurtEffect = load("/Hit.wav", 1);
-        public static Clips enemydeath = load("/enemydeath.wav", 1);
-        public static Clips menu = load("/menuyes.wav", 1);
-        public static Clips gameover = load("/gameover.wav", 1);
-        public static Clips shoot = load("/gunshot.wav", 1);
-        public static Clips reload = load("/reload.wav", 1);
-        public static Clips life = load("/life.wav", 1);
-        public static Clips menumove = load("/menu.wav", 1);
-        public static Clips move = load("/move1.wav", 1);
 
         private static Clips load(String name, int count){
             try{
@@ -79,5 +81,6 @@ public class Sound {
                 }
             }
         }
+
     }
 }

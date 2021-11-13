@@ -40,48 +40,56 @@ public class Entitie{
 
 
     public Entitie(int x, int y, int width, int height, BufferedImage sprite){
-
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
         this.sprite = sprite;
-
         this.maskx = 0;
         this.masky = 0;
         this.maskwidht = width;
         this.maskheight = height;
     }
+
     public void setMask(int maskx, int masky, int maskwidht, int maskheight){
         this.maskx = maskx;
         this.masky = masky;
         this.maskwidht = maskwidht;
         this.maskheight = maskheight;
     }
+
     public void setX(int newX){
         this.x = newX;
     }
+
     public void setY(int newY){
         this.y = newY;
     }
+
     public int getX(){
         return (int) this.x;
     }
+
     public int getY(){
         return (int) this.y;
     }
+
     public int getWidth(){
         return this.width;
     }
+
     public int getHeight(){
         return this.height;
     }
+
     public void tick(){
 
     }
+
     public double calculateDistance(int x1, int y1, int x2, int y2){
         return Math.sqrt((x1-x2)*(x1-x2)+(y1-y2)*(y1-y2));
     }
+
     public void followPath(List<Node> path){
         if(path != null){
             if(path.size()>0){
@@ -107,11 +115,13 @@ public class Entitie{
             }
         }
     }
+
     public static boolean isColliding(Entitie e1, Entitie e2){
         Rectangle e1Mask = new Rectangle(e1.getX()+e1.maskx, e1.getY()+e1.masky, e1.maskwidht, e1.maskheight);
         Rectangle e2Mask = new Rectangle(e2.getX()+e2.maskx, e2.getY()+e2.masky, e2.maskwidht, e2.maskheight);
         return e1Mask.intersects(e2Mask);
     }
+
     public boolean entitieIsColliding(int xnext, int ynext){
         Rectangle entitieCurrent = new Rectangle(xnext+maskx, ynext+masky, maskwidht, maskheight);
         for(int i = 0; i < Game.entities.size(); i++){

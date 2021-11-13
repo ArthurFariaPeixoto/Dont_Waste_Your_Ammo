@@ -15,6 +15,7 @@ public class Spritesheet{
             e.printStackTrace();
         }
     }
+
     public BufferedImage getSprite(int x, int y,int width,int height){
         return spritesheet.getSubimage(x, y, width, height);
     }
