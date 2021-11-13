@@ -80,7 +80,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
         bullet = spritesheet.getSprite(96, 16, 16, 16);
 
         /*Iniciando mundo*/
-        world = new World("/level4.png");
+        world = new World("/level1.png");
         light = new Light();
         /* *** */
 
@@ -172,9 +172,8 @@ public class Game extends Canvas implements Runnable, KeyListener {
             Sound.Clips.menu.play();
             restart = false;
             gameState = "normal";
-            Cur_level = 1;
-        String newWorld = "level" + Cur_level + ".png";
-        World.Restart(newWorld);
+            String newWorld = "level" + Cur_level + ".png";
+            World.Restart(newWorld);
         }
     }
 

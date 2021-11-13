@@ -169,7 +169,7 @@ public class Player extends Entitie{
             if (atual instanceof Bullet) {
                 if (Entitie.isColliding(this, atual)) {
                     Sound.Clips.reload.play();
-                    bullet+=4;
+                    bullet+=8;
                     Game.entities.remove(atual);
                 }
             }

@@ -3,6 +3,8 @@ package com.arthur.entities;
 import com.arthur.main.Game;
 import com.arthur.world.Camera;
 
+import com.arthur.world.World;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
@@ -23,6 +25,10 @@ public class BulletShoot extends Entitie{
         y += directionY * speed;
         curLife++;
         if(curLife==life){
+            Game.bullets.remove(this);
+            return;
+        }
+        if(!World.isFree((int) x,(int) y)){
             Game.bullets.remove(this);
             return;
         }
