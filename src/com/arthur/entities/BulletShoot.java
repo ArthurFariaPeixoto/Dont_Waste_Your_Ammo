@@ -25,6 +25,7 @@ public class BulletShoot extends Entitie{
         x += directionX * speed;
         y += directionY * speed;
         }else{
+            World.generateParticles(6,(int) x,(int) y, Color.yellow);
             Game.bullets.remove(this);
             return;
         }

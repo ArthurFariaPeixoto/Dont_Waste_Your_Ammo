@@ -17,19 +17,19 @@ public class UI {
     }
 
     public void render(Graphics g){
+        Graphics2D g2 = (Graphics2D) g;
 
-        g.setColor(Color.red);
-        g.fillRect(8, 4, 70, 8);
-        g.setColor(Color.green);
-        g.fillRect(8, 4, (int) ((Game.player.life/ Game.player.max_life)*70), 8);
-        g.setColor(Color.black);
-        g.setFont(new Font("arial", Font.BOLD, 8));
-        g.drawString((int)Game.player.life+" / "+(int)Game.player.max_life, 30,11 );
+        g2.setColor(new Color(255, 0, 0, 190));
+        g2.fillRect(8, 4, 70, 8);
+        g2.setColor(new Color(0, 255, 0, 190));
+        g2.fillRect(8, 4, (int) ((Game.player.life/ Game.player.max_life)*70), 8);
+        g2.setColor(Color.black);
+        g2.setFont(new Font("arial", Font.BOLD, 8));
+        g2.drawString((int)Game.player.life+" / "+(int)Game.player.max_life, 30,11 );
 
         /* Renderizando o minimapa */
         renderMinimap();
-        g.drawImage(minimap,190, 120, World.WIDTH, World.HEIGHT, null);
-
+        g2.drawImage(minimap,190, 120, World.WIDTH, World.HEIGHT,null);
 
     }
 
@@ -40,7 +40,7 @@ public class UI {
         for(int xx = 0; xx<World.WIDTH; xx++){
             for(int yy=0; yy<World.HEIGHT; yy++){
                 if(World.tiles[xx + (yy * World.WIDTH)] instanceof WallTile){
-                    minimapPixels[xx + (yy * World.WIDTH)] = 0xFF535353;
+                    minimapPixels[xx + (yy * World.WIDTH)] = 0xFF532300;
                 }
                 if(World.tiles[xx + (yy * World.WIDTH)] instanceof WatterWallTile){
                     minimapPixels[xx + (yy * World.WIDTH)] = 0xFF0109AB;

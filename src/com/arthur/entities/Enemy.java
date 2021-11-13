@@ -39,13 +39,13 @@ public class Enemy extends Entitie{
                 if (!isCollidingWithPlayer()) {
                     if (Game.rand.nextInt(100) < 60) {
                         if (x < Game.player.getX() && World.isFree((int) (x + speed), this.getY(),16,16)
-                                && !entitieIsColliding((int) (x + speed), this.getY())
+                                && !enemyIsColliding((int) (x + speed), this.getY())
                                 || x > Game.player.getX() && World.isFree((int) (x - speed), this.getY(),16,16)
-                                && !entitieIsColliding((int) (x - speed), this.getY())
+                                && !enemyIsColliding((int) (x - speed), this.getY())
                                 || y < Game.player.getY() && World.isFree(this.getX(), (int) (y + speed),16,16)
-                                && !entitieIsColliding(this.getX(), (int) (y + speed))
+                                && !enemyIsColliding(this.getX(), (int) (y + speed))
                                 || y > Game.player.getY() && World.isFree(this.getX(), (int) (y - speed),16,16)
-                                && !entitieIsColliding(this.getX(), (int) (y - speed))) {
+                                && !enemyIsColliding(this.getX(), (int) (y - speed))) {
 
                             if (path == null || path.size() == 0) {
                                 KeepPosition start = new KeepPosition((int) x / 16, (int) y / 16);
@@ -73,7 +73,7 @@ public class Enemy extends Entitie{
             seePlayer = false;
         }
         if(Game.rand.nextInt(100)<70){
-            followPath(path);
+            enemyFollowPath(path);
         }
         frames++;
         if(frames == max_frames){
@@ -85,6 +85,7 @@ public class Enemy extends Entitie{
             }
         CollidingBullet();
         if(life<=0) {
+            World.generateParticles(7,(int) x,(int) y, Color.RED);
             SelfDestroy();
             Sound.Clips.enemydeath.play();
             return;
@@ -108,6 +109,7 @@ public class Enemy extends Entitie{
             Entitie e = Game.bullets.get(i);
             if(e instanceof BulletShoot){
                 if(Entitie.isColliding(this, e)){
+                    World.generateParticles(4,(int) x,(int) y, Color.RED);
                     life-=4;
                     isDamaged = true;
                     Game.bullets.remove(i);

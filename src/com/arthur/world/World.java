@@ -166,4 +166,11 @@ public class World {
             }
         }
     }
+
+    public static void generateParticles(int amount, int x, int y, Color color){
+        for(int i=0; i<amount; i++){
+            Game.entities.add(new Particles(x, y, 1, 1, null, color));
+
+        }
+    }
 }

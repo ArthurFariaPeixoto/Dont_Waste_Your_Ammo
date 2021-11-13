@@ -90,22 +90,22 @@ public class Entitie{
         return Math.sqrt((x1-x2)*(x1-x2)+(y1-y2)*(y1-y2));
     }
 
-    public void followPath(List<Node> path){
+    public void enemyFollowPath(List<Node> path){
         if(path != null){
             if(path.size()>0){
                 KeepPosition target = path.get(path.size()-1).tile;
 
-                if(x<target.x*16 && !entitieIsColliding(this.getX() + 1, this.getY())){
+                if(x<target.x*16 && !enemyIsColliding(this.getX() + 1, this.getY())){
                     x++;
                 }
-                else if(x>target.x*16 && !entitieIsColliding(this.getX()-1, this.getY())){
+                else if(x>target.x*16 && !enemyIsColliding(this.getX()-1, this.getY())){
                     x--;
                 }
 
-                if(y< target.y*16 && !entitieIsColliding(this.getX(), this.getY()+1)){
+                if(y< target.y*16 && !enemyIsColliding(this.getX(), this.getY()+1)){
                     y++;
                 }
-                else if(y> target.y*16 && !entitieIsColliding(this.getX(), this.getY()-1)){
+                else if(y> target.y*16 && !enemyIsColliding(this.getX(), this.getY()-1)){
                     y--;
                 }
 
@@ -122,10 +122,10 @@ public class Entitie{
         return e1Mask.intersects(e2Mask);
     }
 
-    public boolean entitieIsColliding(int xnext, int ynext){
+    public boolean enemyIsColliding(int xnext, int ynext){
         Rectangle entitieCurrent = new Rectangle(xnext+maskx, ynext+masky, maskwidht, maskheight);
-        for(int i = 0; i < Game.entities.size(); i++){
-            Entitie e = Game.entities.get(i);
+        for(int i = 0; i < Game.enemies.size(); i++){
+            Enemy e = Game.enemies.get(i);
             if(e == this){
                 continue;
             }
