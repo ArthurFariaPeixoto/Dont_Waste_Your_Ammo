@@ -33,6 +33,10 @@ public class World {
                         //chão de grama
                         tiles[xx + (yy * WIDTH)] = new FloorTile(xx * 16, yy * 16, Tile.TILE_FLOOR);
                     }
+                    else if(pixelAtual == 0xFF1E1E1E){
+                        //chão de grama com sombra
+                        tiles[xx + (yy * WIDTH)] = new FloorTile(xx * 16, yy * 16, Tile.TILE_FLOORWITHSHADOW);
+                    }
                     else if(pixelAtual == 0xFFFFB23F){
                         //chão de areia
                         tiles[xx + (yy * WIDTH)] = new SandFloorTile(xx * 16, yy * 16, Tile.SAND_FLOOR);
@@ -53,6 +57,10 @@ public class World {
                         //parede de pedra
                         tiles[xx + (yy * WIDTH)] = new WallTile(xx * 16, yy * 16, Tile.STONE_WALL);
                     }
+                    else if(pixelAtual == 0xFFD9D905){
+                        //parede de pedra com sombra
+                        tiles[xx + (yy * WIDTH)] = new WallTile(xx * 16, yy * 16, Tile.STONE_WALLWITHSHADOW);
+                    }
                     else if(pixelAtual == 0xFF0021FF){
                         //agua
                         tiles[xx + (yy * WIDTH)] = new WatterWallTile(xx * 16, yy * 16, Tile.WATER_WALL);
@@ -61,6 +69,11 @@ public class World {
                         //player
                         Game.player.setX(xx * 16);
                         Game.player.setY(yy * 16);
+                    }
+                    else if(pixelAtual == 0xFF0026D9){
+                        //pet
+                        Game.pet.setX(xx * 16);
+                        Game.pet.setY(yy * 16);
                     }
                     else if(pixelAtual ==0xFFFF006E){
                         //vida
@@ -71,11 +84,18 @@ public class World {
                     else if(pixelAtual == 0xFFFFD800){
                         //arma
                         Weapon arma = new Weapon(xx * 16, yy * 16, 16, 16, Entitie.WEAPON_EN);
-                       Game.entities.add(arma);
-                       arma.setMask(2, 0, 11, 15);
+                        Game.entities.add(arma);
+                        arma.setMask(2, 0, 11, 15);
                     }
                     else if(pixelAtual == 0xFF404040){
-                        //flecha
+                        //bala
+                        Bullet bullet = new Bullet(xx * 16, yy * 16, 16, 16, Entitie.BULLET_EN);
+                        Game.entities.add(bullet);
+                        bullet.setMask(3, 3, 12, 12);
+                    }
+                    else if(pixelAtual == 0xFF191919){
+                        //bala na sombra
+                        tiles[xx + (yy * WIDTH)] = new FloorTile(xx * 16, yy * 16, Tile.TILE_FLOORWITHSHADOW);
                         Bullet bullet = new Bullet(xx * 16, yy * 16, 16, 16, Entitie.BULLET_EN);
                         Game.entities.add(bullet);
                         bullet.setMask(3, 3, 12, 12);
@@ -86,13 +106,20 @@ public class World {
                         Game.entities.add(en1);
                         Game.enemies.add(en1);
                     }
+                    else if(pixelAtual == 0xFFCB0606){
+                        //inimigo 1 na sombra
+                        tiles[xx + (yy * WIDTH)] = new FloorTile(xx * 16, yy * 16, Tile.TILE_FLOORWITHSHADOW);
+                        Enemy en1 = new Enemy(xx * 16, yy * 16, 16, 16, Entitie.ENEMY1_EN);
+                        Game.entities.add(en1);
+                        Game.enemies.add(en1);
+                    }
                     else if (pixelAtual == 0xFF51D0FF){
                         //bota
                         Boot boot = new Boot(xx * 16, yy * 16, 16, 16, Entitie.BOOT_EN);
                         Game.entities.add(boot);
                     }
                     else if (pixelAtual == 0xFF606060){
-                        //bota
+                        //cartucho de bala
                         BigAmmo ba = new BigAmmo(xx * 16, yy * 16, 16, 16, Entitie.BigAmmo);
                         Game.entities.add(ba);
                     }
@@ -142,7 +169,9 @@ public class World {
         Game.bullets = new ArrayList<BulletShoot>();
         Game.spritesheet = new Spritesheet("/spritesheet.png");
         Game.player = new Player(0, 0, 16, 16, Game.spritesheet.getSprite(32, 0, 16, 16));
+        Game.pet = new Pet(0,0,16,16,Game.spritesheet.getSprite(0, 32, 16, 16));
         Game.entities.add(Game.player);
+        Game.entities.add(Game.pet);
         Game.world = new World("/" +level);
         Game.ui = new UI();
         return;

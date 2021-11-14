@@ -11,9 +11,12 @@ public class Tile {
     public static BufferedImage SAND_FLOOR = Game.spritesheet.getSprite(16,144,16,16);
     public static BufferedImage WATERSAND_FLOOR = Game.spritesheet.getSprite(16,128,16,16);
     public static BufferedImage WATERSAND_FLOOR2 = Game.spritesheet.getSprite(32,128,16,16);
+    public static BufferedImage TILE_FLOORWITHSHADOW = Game.spritesheet.getSprite(32,144,16,16);
     public static BufferedImage TILE_WALL = Game.spritesheet.getSprite(16,0,16,16);
     public static BufferedImage STONE_WALL = Game.spritesheet.getSprite(0,144,16,16);
     public static BufferedImage WATER_WALL = Game.spritesheet.getSprite(0,128,16,16);
+    public static BufferedImage STONE_WALLWITHSHADOW = Game.spritesheet.getSprite(48,144,16,16);
+    public static BufferedImage TILE_WALLWITHSHADOW = Game.spritesheet.getSprite(64,144,16,16);
 
     private BufferedImage sprite;
     private int x, y;
