@@ -40,6 +40,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 
     public static Spritesheet spritesheet;
     public static Player player;
+    public static Pet pet;
     public static World world;
     public static Random rand;
     public static UI ui;
@@ -56,7 +57,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
     public static int[] pixels;
 
     public Game(){
-        Sound.Clips.music.loop();
+        //Sound.Clips.music.loop();
         rand = new Random();
         addKeyListener(this);
         //Janela Cheia
@@ -76,8 +77,10 @@ public class Game extends Canvas implements Runnable, KeyListener {
         bullets = new ArrayList<BulletShoot>();
 
         spritesheet = new Spritesheet("/spritesheet.png");
+        pet = new Pet(0,0,16,16,spritesheet.getSprite(0, 32, 16, 16));
         player = new Player(0, 0, 16, 16, spritesheet.getSprite(32, 0, 16, 16));
         entities.add(player);
+        entities.add(pet);
         bullet = spritesheet.getSprite(96, 16, 16, 16);
 
         /*Iniciando mundo*/
