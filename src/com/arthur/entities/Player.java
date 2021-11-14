@@ -59,22 +59,22 @@ public class Player extends Entitie{
     public void tick(){
         depth=1;
         moved = false;
-        if(right && World.isFree((int)(x+speed), this.getY(),16,16)){
+        if(right && World.isFree((int)(x+speed), this.getY(),10,16)){
             moved = true;
             dir = right_dir;
             x+=speed;
         }
-        else if (left && World.isFree((int)(x-speed), this.getY(),16,16)){
+        else if (left && World.isFree((int)(x-speed), this.getY(),10,16)){
             moved = true;
             dir = left_dir;
             x-=speed;
         }
-        if (up && World.isFree(this.getX(), (int)(y-speed),16,16)){
+        if (up && World.isFree(this.getX(), (int)(y-speed),10,16)){
             moved = true;
             dir = up_dir;
             y-=speed;
         }
-        else if(down && World.isFree(this.getX(), (int)(y+speed),16,16)){
+        else if(down && World.isFree(this.getX(), (int)(y+speed),10,16)){
             dir = down_dir;
             moved = true;
             y+=speed;

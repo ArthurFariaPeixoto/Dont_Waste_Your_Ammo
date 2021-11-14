@@ -38,13 +38,13 @@ public class Enemy extends Entitie{
             if (seePlayer == true) {
                 if (!isCollidingWithPlayer()) {
                     if (Game.rand.nextInt(100) < 60) {
-                        if (x < Game.player.getX() && World.isFree((int) (x + speed), this.getY(),16,16)
+                        if (x < Game.player.getX() && World.isFree((int) (x + speed), this.getY(),12,16)
                                 && !enemyIsColliding((int) (x + speed), this.getY())
-                                || x > Game.player.getX() && World.isFree((int) (x - speed), this.getY(),16,16)
+                                || x > Game.player.getX() && World.isFree((int) (x - speed), this.getY(),12,16)
                                 && !enemyIsColliding((int) (x - speed), this.getY())
-                                || y < Game.player.getY() && World.isFree(this.getX(), (int) (y + speed),16,16)
+                                || y < Game.player.getY() && World.isFree(this.getX(), (int) (y + speed),12,16)
                                 && !enemyIsColliding(this.getX(), (int) (y + speed))
-                                || y > Game.player.getY() && World.isFree(this.getX(), (int) (y - speed),16,16)
+                                || y > Game.player.getY() && World.isFree(this.getX(), (int) (y - speed),12,16)
                                 && !enemyIsColliding(this.getX(), (int) (y - speed))) {
 
                             if (path == null || path.size() == 0) {
