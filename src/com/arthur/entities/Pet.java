@@ -21,7 +21,7 @@ public class Pet extends Entitie {
         sprites[0] = Game.spritesheet.getSprite(0, 32, 16, 16);
         sprites[1] = Game.spritesheet.getSprite(16,32, 16, 16);
         sprites[2] = Game.spritesheet.getSprite(0, 48, 16, 16);
-        sprites[3] = Game.spritesheet.getSprite(0, 64, 16, 16);
+        sprites[3] = Game.spritesheet.getSprite(16,32, 16, 16);
         sprites[4] = Game.spritesheet.getSprite(16,48, 16, 16);
     }
 
