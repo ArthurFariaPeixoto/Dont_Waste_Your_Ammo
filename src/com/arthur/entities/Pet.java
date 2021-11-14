@@ -47,17 +47,18 @@ public class Pet extends Entitie {
                 enemyFollowPath(path);
             }
         }
-    frames++;
+        frames++;
         if(frames ==max_frames){
             frames = 0;
             index++;
-        if (index > max_index) {
-            index = 0;
-        World.generateParticles(2,(int) x+(9/2),(int) y+15, Color.blue);
+            if(index == 3){
+                World.generateParticles(7,(int) x+8,(int) y+16, Color.cyan);
+            }
+            if (index > max_index) {
+                index = 0;
+            }
         }
     }
-
-}
 
     public void render(Graphics g){
         g.drawImage(sprites[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
