@@ -37,6 +37,9 @@ public class Entitie{
     public static BufferedImage BOOT_EN = Game.spritesheet.getSprite(96, 32, 16, 16);
     public static BufferedImage BigAmmo = Game.spritesheet.getSprite(96, 48, 16, 16);
     public static BufferedImage SaveCard = Game.spritesheet.getSprite(112, 48, 16, 16);
+    public static BufferedImage RedSlime = Game.spritesheet.getSprite(128,80,16,16);
+    public static BufferedImage GreenSlime = Game.spritesheet.getSprite(128,112,16,16);
+    public static BufferedImage DamagedSlime = Game.spritesheet.getSprite(128,144,16,16);
 
 
     public Entitie(int x, int y, int width, int height, BufferedImage sprite){
@@ -125,7 +128,7 @@ public class Entitie{
     public boolean enemyIsColliding(int xnext, int ynext){
         Rectangle entitieCurrent = new Rectangle(xnext+maskx, ynext+masky, maskwidht, maskheight);
         for(int i = 0; i < Game.enemies.size(); i++){
-            Enemy e = Game.enemies.get(i);
+            Entitie e = Game.enemies.get(i);
             if(e == this){
                 continue;
             }

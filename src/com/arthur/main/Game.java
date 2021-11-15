@@ -35,7 +35,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
     private final BufferedImage bullet;
 
     public static List<Entitie> entities;
-    public static List<Enemy> enemies;
+    public static List<Entitie> enemies;
     public static List<BulletShoot> bullets;
 
     public static Spritesheet spritesheet;
@@ -73,7 +73,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
         pixels = ((DataBufferInt)image.getRaster().getDataBuffer()).getData();
 
         entities = new ArrayList<Entitie>();
-        enemies = new ArrayList<Enemy>();
+        enemies = new ArrayList<Entitie>();
         bullets = new ArrayList<BulletShoot>();
 
         spritesheet = new Spritesheet("/spritesheet.png");

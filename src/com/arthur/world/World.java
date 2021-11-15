@@ -101,10 +101,20 @@ public class World {
                         bullet.setMask(3, 3, 12, 12);
                     }
                     else if(pixelAtual == 0xFFFF0000){
-                        //inimigo 1
-                        Enemy en1 = new Enemy(xx * 16, yy * 16, 16, 16, Entitie.ENEMY1_EN);
-                        Game.entities.add(en1);
-                        Game.enemies.add(en1);
+                        //inimigo
+                        if(Game.rand.nextInt(100)<40){
+                            Enemy en1 = new Enemy(xx * 16, yy * 16, 16, 16, Entitie.ENEMY1_EN);
+                            Game.entities.add(en1);
+                            Game.enemies.add(en1);
+                        }else if(Game.rand.nextInt(100)<33){
+                            RedSlime redSlime = new RedSlime(xx * 16, yy * 16, 16, 16, Entitie.RedSlime);
+                            Game.entities.add(redSlime);
+                            Game.enemies.add(redSlime);
+                        }else{
+                            GreenSlime greenSlime = new GreenSlime(xx * 16, yy * 16, 16, 16, Entitie.GreenSlime);
+                            Game.entities.add(greenSlime);
+                            Game.enemies.add(greenSlime);
+                        }
                     }
                     else if(pixelAtual == 0xFFCB0606){
                         //inimigo 1 na sombra
@@ -165,7 +175,7 @@ public class World {
         Game.enemies.clear();
         Game.bullets.clear();
         Game.entities = new ArrayList<Entitie>();
-        Game.enemies = new ArrayList<Enemy>();
+        Game.enemies = new ArrayList<Entitie>();
         Game.bullets = new ArrayList<BulletShoot>();
         Game.spritesheet = new Spritesheet("/spritesheet.png");
         Game.player = new Player(0, 0, 16, 16, Game.spritesheet.getSprite(32, 0, 16, 16));
