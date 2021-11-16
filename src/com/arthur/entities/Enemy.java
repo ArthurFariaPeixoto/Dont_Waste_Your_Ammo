@@ -39,13 +39,13 @@ public class Enemy extends Entitie{
                 if (!isCollidingWithPlayer()) {
                     if (Game.rand.nextInt(100) < 60) {
                         if (x < Game.player.getX() && World.isFree((int) (x + speed), this.getY(),12,16)
-                                && !enemyIsColliding((int) (x + speed), this.getY())
+                                && !enemyIsColliding((int) (x + speed), this.getY(), maskx, masky, maskwidht, maskheight)
                                 || x > Game.player.getX() && World.isFree((int) (x - speed), this.getY(),12,16)
-                                && !enemyIsColliding((int) (x - speed), this.getY())
+                                && !enemyIsColliding((int) (x - speed), this.getY(),maskx, masky, maskwidht, maskheight)
                                 || y < Game.player.getY() && World.isFree(this.getX(), (int) (y + speed),12,16)
-                                && !enemyIsColliding(this.getX(), (int) (y + speed))
+                                && !enemyIsColliding(this.getX(), (int) (y + speed),maskx, masky, maskwidht, maskheight)
                                 || y > Game.player.getY() && World.isFree(this.getX(), (int) (y - speed),12,16)
-                                && !enemyIsColliding(this.getX(), (int) (y - speed))) {
+                                && !enemyIsColliding(this.getX(), (int) (y - speed),maskx, masky, maskwidht, maskheight)) {
 
                             if (path == null || path.size() == 0) {
                                 KeepPosition start = new KeepPosition((int) x / 16, (int) y / 16);

@@ -102,11 +102,11 @@ public class World {
                     }
                     else if(pixelAtual == 0xFFFF0000){
                         //inimigo
-                        if(Game.rand.nextInt(100)<40){
+                        if(Game.rand.nextInt(100)<50){
                             Enemy en1 = new Enemy(xx * 16, yy * 16, 16, 16, Entitie.ENEMY1_EN);
                             Game.entities.add(en1);
                             Game.enemies.add(en1);
-                        }else if(Game.rand.nextInt(100)<33){
+                        }else if(Game.rand.nextInt(100)<50){
                             RedSlime redSlime = new RedSlime(xx * 16, yy * 16, 16, 16, Entitie.RedSlime);
                             Game.entities.add(redSlime);
                             Game.enemies.add(redSlime);

@@ -57,7 +57,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
     public static int[] pixels;
 
     public Game(){
-        //Sound.Clips.music.loop();
+        Sound.Clips.music.loop();
         rand = new Random();
         addKeyListener(this);
         //Janela Cheia
@@ -84,7 +84,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
         bullet = spritesheet.getSprite(96, 16, 16, 16);
 
         /*Iniciando mundo*/
-        world = new World("/level1.png");
+        world = new World("/level4.png");
         light = new Light();
         /* *** */
 

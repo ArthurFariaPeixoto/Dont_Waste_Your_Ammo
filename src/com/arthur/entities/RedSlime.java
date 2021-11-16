@@ -11,11 +11,11 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class RedSlime extends Entitie{
-    private int frames = 0, max_frames = 9, index = 0, max_index = 3;
+    private int frames = 0, max_frames = 11, index = 0, max_index = 4;
     private double speed = 1;
     private int maskx = 2, masky = 7, maskwidht =12, maskheight = 9;
     private BufferedImage[] sprites;
-    public int life = 12;
+    public int life = 10;
     private boolean isDamaged = false;
     private int damagedFrames = 0;
     private boolean seePlayer = false;
@@ -39,13 +39,13 @@ public class RedSlime extends Entitie{
                 if (!isColliding(this, Game.player)) {
                     if (Game.rand.nextInt(100) < 60) {
                         if (x < Game.player.getX() && World.isFree((int) (x + speed), this.getY(), 12, 16)
-                                && !enemyIsColliding((int) (x + speed), this.getY())
+                                && !enemyIsColliding((int) (x + speed), this.getY(),maskx, masky, maskwidht, maskheight)
                                 || x > Game.player.getX() && World.isFree((int) (x - speed), this.getY(), 12, 16)
-                                && !enemyIsColliding((int) (x - speed), this.getY())
+                                && !enemyIsColliding((int) (x - speed), this.getY(),maskx, masky, maskwidht, maskheight)
                                 || y < Game.player.getY() && World.isFree(this.getX(), (int) (y + speed), 12, 16)
-                                && !enemyIsColliding(this.getX(), (int) (y + speed))
+                                && !enemyIsColliding(this.getX(), (int) (y + speed),maskx, masky, maskwidht, maskheight)
                                 || y > Game.player.getY() && World.isFree(this.getX(), (int) (y - speed), 12, 16)
-                                && !enemyIsColliding(this.getX(), (int) (y - speed))) {
+                                && !enemyIsColliding(this.getX(), (int) (y - speed),maskx, masky, maskwidht, maskheight)) {
 
                             if (path == null || path.size() == 0) {
                                 KeepPosition start = new KeepPosition((int) x / 16, (int) y / 16);
@@ -110,7 +110,7 @@ public class RedSlime extends Entitie{
             if(e instanceof BulletShoot){
                 if(Entitie.isColliding(this, e)){
                     World.generateParticles(4,(int) x,(int) y, Color.RED);
-                    life-=4;
+                    life-=2;
                     isDamaged = true;
                     Game.bullets.remove(i);
                     return;
