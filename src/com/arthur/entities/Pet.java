@@ -62,6 +62,5 @@ public class Pet extends Entitie {
 
     public void render(Graphics g){
         g.drawImage(sprites[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
-
     }
 }
