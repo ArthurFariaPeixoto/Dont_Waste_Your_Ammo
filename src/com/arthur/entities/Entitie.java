@@ -111,7 +111,6 @@ public class Entitie{
                 else if(y> target.y*16 && !enemyIsColliding(this.getX(), this.getY()-1,maskx, masky, maskwidht, maskheight)){
                     y--;
                 }
-
                 if(x == target.x*16 && y == target.y*16){
                     path.remove(path.size()-1);
                 }
@@ -144,11 +143,10 @@ public class Entitie{
     public void render(Graphics g){
         g.drawImage(sprite, getX() - Camera.x, getY() - Camera.y, null);
         /*Visualização de colisao
+
         g.setColor(Color.blue);
         g.fillRect(getX()+maskx - Camera.x, getY()+masky - Camera.y, maskwidht, maskheight);
-
          /**/
-
     }
 
     public static Comparator<Entitie> verifyDepth = new Comparator<Entitie>() {
