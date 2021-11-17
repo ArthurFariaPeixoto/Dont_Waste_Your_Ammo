@@ -86,7 +86,6 @@ public class Entitie{
     }
 
     public void tick(){
-
     }
 
     public double calculateDistance(int x1, int y1, int x2, int y2){
