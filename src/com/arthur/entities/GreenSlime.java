@@ -86,7 +86,7 @@ public class GreenSlime extends Entitie {
         }
         CollidingBullet();
         if(life<=0) {
-            World.generateParticles(7,(int) x,(int) y, Color.RED);
+            World.generateParticles(7,(int) x,(int) y, Color.GREEN);
             SelfDestroy();
             Sound.Clips.enemydeath.play();
             return;
@@ -110,7 +110,7 @@ public class GreenSlime extends Entitie {
             Entitie e = Game.bullets.get(i);
             if(e instanceof BulletShoot){
                 if(Entitie.isColliding(this, e)){
-                    World.generateParticles(4,(int) x,(int) y, Color.RED);
+                    World.generateParticles(5,(int) x,(int) y, Color.GREEN);
                     life-=4;
                     isDamaged = true;
                     Game.bullets.remove(i);
